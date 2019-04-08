@@ -6,9 +6,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  * Адаптер (для JAXB) для преобразования между типом LocalDate и строковым
- * представлением даты в стандарте ISO 8601, например как '2012-12-03'.
- *
- * @author Marco Jakob
+ * представлением даты, например как '2012-12-03'.
  */
 public class LocalDateAdapter extends XmlAdapter<String, LocalDate> {
 

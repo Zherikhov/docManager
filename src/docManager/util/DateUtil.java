@@ -9,7 +9,7 @@ import java.time.format.DateTimeParseException;
  */
 public class DateUtil {
 
-    /** Шаблон даты, используемый для преобразования. Можно поменять на свой. */
+    /** Шаблон даты, используемый для преобразования.*/
     private static final String DATE_PATTERN = "dd.MM.yyyy";
 
     /** Форматировщик даты. */
@@ -17,7 +17,7 @@ public class DateUtil {
             DateTimeFormatter.ofPattern(DATE_PATTERN);
 
     /**
-     * Возвращает полученную дату в виде хорошо отформатированной строки.
+     * Возвращает полученную дату в виде отформатированной строки.
      * Используется определённый выше {@link DateUtil#DATE_PATTERN}.
      *
      * @param date - дата, которая будет возвращена в виде строки

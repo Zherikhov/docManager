@@ -9,12 +9,9 @@ import javafx.stage.FileChooser;
 import docManager.Main;
 
 /**
- * Контроллер для корневого макета. Корневой макет предоставляет базовый
- * макет приложения, содержащий строку меню и место, где будут размещены
- * остальные элементы JavaFX.
- *
- * @author Marco Jakob
+ * Контроллер для корневого макета.
  */
+
 public class MenuBarController {
 
     // Ссылка на главное приложение
@@ -40,7 +37,7 @@ public class MenuBarController {
 
     /**
      * Открывает FileChooser, чтобы пользователь имел возможность
-     * выбрать адресную книгу для загрузки.
+     * выбрать документ для загрузки.
      */
     @FXML
     private void handleOpen() {
@@ -61,7 +58,7 @@ public class MenuBarController {
 
     /**
      * Сохраняет файл в файл адресатов, который в настоящее время открыт.
-     * Если файл не открыт, то отображается диалог "save as".
+     * Если файл не открыт, то отображается диалог "Сохранить как...".
      */
     @FXML
     private void handleSave() {
@@ -99,14 +96,14 @@ public class MenuBarController {
     }
 
     /**
-     * Открывает диалоговое окно about.
+     * Открывает диалоговое окно "О программе".
      */
     @FXML
     private void handleAbout() {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("О программе!");
         alert.setHeaderText("Прошу внимания!");
-        alert.setContentText("Тут скоро будет важный текст!");
+        alert.setContentText("Тут скоро будет важная информация!");
 
         alert.showAndWait();
     }

@@ -51,7 +51,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         this.menuBar = primaryStage;
-        this.menuBar.setTitle("Жерихов Владислав Сергеевич");
+        this.menuBar.setTitle("");
 
         initMenuBar();
         initMainWindow();
@@ -219,16 +219,16 @@ public class Main extends Application {
             DataListWrapper wrapper = (DataListWrapper) um.unmarshal(file);
 
             contractData.clear();
-            contractData.addAll(wrapper.getMainData());  //возможно тут
+            contractData.addAll(wrapper.getMainData());
 
             // Сохраняем путь к файлу в реестре.
             setDataFilePath(file);
 
-        } catch (Exception e) { // catches ANY exception
+        } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Could not load data");
-            alert.setContentText("Could not load data from file:\n" + file.getPath());
+            alert.setTitle("Ошибка!");
+            alert.setHeaderText("Не удалось загрузить данные.");
+            alert.setContentText("Не удалось загрузить данные из файла:\n" + file.getPath());
 
             alert.showAndWait();
         }
@@ -258,8 +258,8 @@ public class Main extends Application {
         } catch (Exception e) { // catches ANY exception
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
-            alert.setHeaderText("Could not save data");
-            alert.setContentText("Could not save data to file:\n" + file.getPath());
+            alert.setHeaderText("Не удалось сохранить данные");
+            alert.setContentText("Не удалось сохранить данные в:\n" + file.getPath());
 
             alert.showAndWait();
         }
