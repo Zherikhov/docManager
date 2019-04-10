@@ -35,7 +35,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <GridPane layoutX="6.0" layoutY="46.0" prefHeight="503.0" prefWidth="523.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="45.0">
+                  <GridPane layoutX="6.0" layoutY="46.0" prefHeight="355.0" prefWidth="523.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="45.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="352.0" minWidth="10.0" prefWidth="306.0" />
                       <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="242.0" minWidth="10.0" prefWidth="117.0" />
@@ -49,10 +49,6 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
@@ -128,32 +124,8 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Button mnemonicParsing="false" onAction="#handleCalculator" text="Правка" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-                        <Hyperlink text="Hyperlink" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="8">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Hyperlink>
-                        <Hyperlink text="Hyperlink" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="9">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Hyperlink>
-                        <Hyperlink text="Hyperlink" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="10">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Hyperlink>
-                        <Hyperlink text="Hyperlink" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="11">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Hyperlink>
-                        <Hyperlink text="Hyperlink" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="12">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Hyperlink>
+                        <Button mnemonicParsing="false" onAction="#handleCalculator" prefHeight="25.0" prefWidth="70.0" text="Правка" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Открыть" GridPane.columnIndex="2" GridPane.rowIndex="8" />
                      </children>
                   </GridPane>
                   <HBox layoutX="472.0" layoutY="559.0" spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
@@ -166,6 +138,15 @@
                         <Insets />
                      </opaqueInsets>
                   </HBox>
+                  <TableView layoutY="404.0" prefHeight="138.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="404.0">
+                    <columns>
+                      <TableColumn prefWidth="185.0" text="Договор" />
+                      <TableColumn prefWidth="336.0" text="Ссылка" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
                </children>
             </AnchorPane>
         </items>

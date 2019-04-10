@@ -16,6 +16,8 @@ public class MainController {
     @FXML
     private TableView<MainData> contractTable;
     @FXML
+    private TableView<MainData> contractTable2;
+    @FXML
     private TableColumn<MainData, String> numberContractColumn;
     @FXML
     private TableColumn<MainData, LocalDate> dateExecutionContractColumn;
@@ -152,7 +154,8 @@ public class MainController {
         if (selectedData != null) {
             boolean okClicked = main.showDataEditDialog(selectedData);
             if (okClicked) {
-                showContractDetails(selectedData);
+//                showContractDetails(selectedData);
+                System.out.println("OK");
             }
 
         } else {
@@ -169,6 +172,22 @@ public class MainController {
 
     @FXML
     private void handleCalculator() {
+        MainData selectedData = contractTable.getSelectionModel().getSelectedItem();
+        if (selectedData != null) {
+            boolean okClicked = main.showCalculatorDialog(selectedData);
+            if (okClicked) {
+                showContractDetails(selectedData);
+            }
 
+        } else {
+            // Ничего не выбрано.
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.initOwner(main.getMenuBar());
+            alert.setTitle("Ошибка");
+            alert.setHeaderText("Договор не выбран.");
+            alert.setContentText("Пожалуйста, выберите необходимый документ для правки.");
+
+            alert.showAndWait();
+        }
     }
 }

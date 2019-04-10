@@ -131,7 +131,7 @@ public class Main extends Application {
             // Загружаем fxml-файл и создаём новую сцену
             // для всплывающего диалогового окна.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("view/fxml/ContractEditDialog.fxml"));
+            loader.setLocation(Main.class.getResource("view/fxml/сontractEditDialog.fxml"));
             AnchorPane page = loader.load();
 
             // Создаём диалоговое окно Stage.
@@ -161,8 +161,35 @@ public class Main extends Application {
      *
      */
 
-    public void showCalculatorDialog() {
+    public boolean showCalculatorDialog(MainData mainData) {
+        try {
+            // Загружаем fxml-файл и создаём новую сцену
+            // для всплывающего диалогового окна.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("view/fxml/calculator.fxml"));
+            AnchorPane page = loader.load();
 
+            // Создаём диалоговое окно Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Калькулятор");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(menuBar);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Передаём адресата в контроллер.
+
+
+
+            // Отображаем диалоговое окно и ждём, пока пользователь его не закроет
+            dialogStage.showAndWait();
+
+//            return controller.isOkClicked();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**

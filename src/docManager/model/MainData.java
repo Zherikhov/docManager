@@ -20,6 +20,7 @@ public class MainData {
     private final ObjectProperty<LocalDate> dateExecutionContract;
     private final ObjectProperty<LocalDate> timeContract;
     private final IntegerProperty price;
+    private final IntegerProperty priceOnly;
 
     /**
      * Конструктор по умолчанию.
@@ -41,6 +42,7 @@ public class MainData {
         this.counterparty = new SimpleStringProperty();
         this.subjectContract = new SimpleStringProperty();
         this.price = new SimpleIntegerProperty();
+        this.priceOnly = new SimpleIntegerProperty();
     }
 
     public String getNumberContract() {

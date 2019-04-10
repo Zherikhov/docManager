@@ -39,7 +39,7 @@
             <TextField fx:id="dateContractField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
-      <Button layoutX="303.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="25.0" prefWidth="77.0" text="Отмена" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="104.0" />
-      <Button layoutX="303.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleOk" prefHeight="25.0" prefWidth="77.0" text="Принять" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="20.0" />
+      <Button layoutX="309.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="25.0" prefWidth="77.0" text="Отмена" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+      <Button layoutX="225.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleOk" prefHeight="25.0" prefWidth="77.0" text="Принять" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="98.0" />
    </children>
 </AnchorPane>
