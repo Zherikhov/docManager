@@ -1,5 +1,8 @@
 package docManager;
 
+import docManager.controller.CalculatorController;
+import docManager.model.DataAdditionally;
+import docManager.util.ArrayUtil;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -39,6 +42,19 @@ public class Main extends Application {
      */
     public ObservableList<MainData> getContractData() {
         return contractData;
+    }
+
+    /**
+     * Данные, в виде наблюдаемого списка документов.
+     */
+    private ObservableList<DataAdditionally> contractDataAdditionally = FXCollections.observableArrayList();
+
+    /**
+     * Возвращает данные в виде наблюдаемого списка документов.
+     * @return
+     */
+    public ObservableList<DataAdditionally> getContractDataAdditionally() {
+        return contractDataAdditionally;
     }
 
     /**
@@ -161,7 +177,7 @@ public class Main extends Application {
      *
      */
 
-    public boolean showCalculatorDialog(MainData mainData) {
+    public boolean showCalculatorDialog(MainData mainData, ArrayUtil arrayUtil, DataAdditionally dataAdditionally) {
         try {
             // Загружаем fxml-файл и создаём новую сцену
             // для всплывающего диалогового окна.
@@ -178,19 +194,22 @@ public class Main extends Application {
             dialogStage.setScene(scene);
 
             // Передаём адресата в контроллер.
-
-
+            CalculatorController controller = loader.getController();
+            controller.setEditStage(dialogStage);
+            controller.setMainData(mainData, arrayUtil, dataAdditionally);
+            controller.setMain(this);
 
             // Отображаем диалоговое окно и ждём, пока пользователь его не закроет
             dialogStage.showAndWait();
 
-//            return controller.isOkClicked();
-            return true;
+            return controller.isOkClicked();
         } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
     }
+
+
 
     /**
      * Возвращает preference файла адресатов, то есть, последний открытый файл.

@@ -28,11 +28,9 @@ public class ContractEditController {
     @FXML
     private TextField priceField;
 
-
     private Stage editStage;
     private MainData mainData;
     private boolean okClicked = false;
-
 
     @FXML
     private void initialize() {

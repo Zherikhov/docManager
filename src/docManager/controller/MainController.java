@@ -1,5 +1,7 @@
 package docManager.controller;
 
+import docManager.model.DataAdditionally;
+import docManager.util.ArrayUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -16,7 +18,7 @@ public class MainController {
     @FXML
     private TableView<MainData> contractTable;
     @FXML
-    private TableView<MainData> contractTable2;
+    private TableView<MainData> linkTable;
     @FXML
     private TableColumn<MainData, String> numberContractColumn;
     @FXML
@@ -38,6 +40,8 @@ public class MainController {
     private Label timeContractLabel;
     @FXML
     private Label priceLabel;
+    @FXML
+    private Label priceOnlyLabel;
 
 
     // Ссылка на главное приложение.
@@ -57,7 +61,7 @@ public class MainController {
         // Инициализация таблицы.
         numberContractColumn.setCellValueFactory(cellData -> cellData.getValue().numberContractProperty());
         dateExecutionContractColumn.setCellValueFactory(cellData -> cellData.getValue().dateExecutionContractProperty());
-        timeContractColumn.setCellValueFactory(cellData -> cellData.getValue().timeContractProperty());
+        timeContractColumn.setCellValueFactory  (cellData -> cellData.getValue().timeContractProperty());
 
         // Очистка дополнительной информации об адресате.
         showContractDetails(null);
@@ -93,11 +97,11 @@ public class MainController {
             counterpartyLabel.setText(mainData.getCounterparty());
             subjectContractLabel.setText(mainData.getSubjectContract());
             priceLabel.setText(Integer.toString(mainData.getPrice()));
+            priceOnlyLabel.setText(Integer.toString((mainData.getPrice()-mainData.getSumСostsInt())));
 
             dateContractLabel.setText(DateUtil.format(mainData.getDateContract()));
             dateExecutionContractLabel.setText(DateUtil.format(mainData.getDateExecutionContract()));
             timeContractLabel.setText(DateUtil.format(mainData.getTimeContract()));
-
 
         } else {
             // Если Data = null, то убираем весь текст.
@@ -108,6 +112,7 @@ public class MainController {
             dateExecutionContractLabel.setText("-");
             timeContractLabel.setText("-");
             priceLabel.setText("-");
+            priceOnlyLabel.setText("-");
         }
     }
 
@@ -115,7 +120,7 @@ public class MainController {
      * Вызывается, когда пользователь кликает по кнопке удаления.
      */
     @FXML
-    private void handleDeleteContract() {
+    private void handleDeleteData() {
         int selectedIndex = contractTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
             contractTable.getItems().remove(selectedIndex);
@@ -136,7 +141,7 @@ public class MainController {
      * Открывает диалоговое окно с дополнительной информацией нового адресата.
      */
     @FXML
-    private void handleNewPerson() {
+    private void handleNewData() {
         MainData tempData = new MainData();
         boolean okClicked = main.showDataEditDialog(tempData);
         if (okClicked) {
@@ -149,13 +154,12 @@ public class MainController {
      * Открывает диалоговое окно для изменения выбранного адресата.
      */
     @FXML
-    private void handleEditPerson() {
+    private void handleEditData() {
         MainData selectedData = contractTable.getSelectionModel().getSelectedItem();
         if (selectedData != null) {
             boolean okClicked = main.showDataEditDialog(selectedData);
             if (okClicked) {
-//                showContractDetails(selectedData);
-                System.out.println("OK");
+                showContractDetails(selectedData);
             }
 
         } else {
@@ -171,10 +175,12 @@ public class MainController {
     }
 
     @FXML
-    private void handleCalculator() {
+    private void handleCalculator() {   //разобраться как работает
         MainData selectedData = contractTable.getSelectionModel().getSelectedItem();
+        ArrayUtil arrayUtil = new ArrayUtil();
+        DataAdditionally dataAdditionally = new DataAdditionally();
         if (selectedData != null) {
-            boolean okClicked = main.showCalculatorDialog(selectedData);
+            boolean okClicked = main.showCalculatorDialog(selectedData, arrayUtil, dataAdditionally); //?
             if (okClicked) {
                 showContractDetails(selectedData);
             }

@@ -1,13 +1,10 @@
 package docManager.model;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
+import java.util.List;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import docManager.util.LocalDateAdapter;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -21,6 +18,8 @@ public class MainData {
     private final ObjectProperty<LocalDate> timeContract;
     private final IntegerProperty price;
     private final IntegerProperty priceOnly;
+    private int[] sumСosts = new int[10];
+    private IntegerProperty qwe;
 
     /**
      * Конструктор по умолчанию.
@@ -43,6 +42,48 @@ public class MainData {
         this.subjectContract = new SimpleStringProperty();
         this.price = new SimpleIntegerProperty();
         this.priceOnly = new SimpleIntegerProperty();
+        this.qwe = new SimpleIntegerProperty();
+    }
+
+    public int[] getSumСosts() {
+        return sumСosts;
+    }
+
+    public Integer getSumСostsInt() {
+        Integer temp = 0;
+        for (int i = 0; i < sumСosts.length; i++) {
+            temp = temp + sumСosts[i];
+        }
+        return temp;
+    }
+
+    public IntegerProperty getQwe(){
+        return qwe;
+    }
+
+    public void setQwe(int qwe) {
+        this.qwe.set(qwe);
+    }
+
+    public void setSumСosts(int costs) {
+        for (int i = 0; i < sumСosts.length; i++) {
+            if (sumСosts[i] == 0) {
+                sumСosts[i] = costs;
+                return;
+            }
+        }
+    }
+
+    public int getPriceOnly() {
+        return priceOnly.get();
+    }
+
+    public IntegerProperty priceOnlyProperty() {
+        return priceOnly;
+    }
+
+    public void setPriceOnly(int priceOnly) {
+        this.priceOnly.set(priceOnly);
     }
 
     public String getNumberContract() {
