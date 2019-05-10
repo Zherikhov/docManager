@@ -1,23 +1,23 @@
 package docManager.controller;
 
 import docManager.Main;
-import docManager.model.DataAdditionally;
+//import docManager.model.DataAdditionally;
 import docManager.model.MainData;
 import docManager.util.ArrayUtil;
+import javafx.beans.property.IntegerProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.util.Arrays;
 
 public class CalculatorController {
     @FXML
-    private TableView<DataAdditionally> tableView;
+    private TableView<MainData> tableView;
     @FXML
-    private TableColumn<DataAdditionally, Number> priceColumn;
+    private TableColumn<MainData, Number> priceColumn;
     @FXML
-    private TableColumn<DataAdditionally, String> descriptionColumn;
+    private TableColumn<MainData, String> descriptionColumn;
     @FXML
     private Label priceLabel;
     @FXML
@@ -29,7 +29,7 @@ public class CalculatorController {
 
     private Stage editStage;
     private MainData mainData;
-    private DataAdditionally dataAdditionally;
+//    private DataAdditionally dataAdditionally;
     private ArrayUtil arrayUtil;
     private boolean okClicked = false;
 
@@ -38,7 +38,7 @@ public class CalculatorController {
 
     @FXML
     private void initialize() {
-       priceColumn.setCellValueFactory(cellData -> cellData.getValue().getQwe());
+//       priceColumn.setCellValueFactory(cellData -> cellData.getValue().getSumСostsProperty());
 
     }
 
@@ -56,26 +56,24 @@ public class CalculatorController {
      *
      * @param mainData
      */
-    public void setMainData(MainData mainData, ArrayUtil arrayUtil, DataAdditionally dataAdditionally) {
+    public void setMainData(MainData mainData, ArrayUtil arrayUtil) {
         this.mainData = mainData;
         this.arrayUtil = arrayUtil;
-        this.dataAdditionally = dataAdditionally;
+//        this.dataAdditionally = dataAdditionally;
 
         priceLabel.setText(Integer.toString(mainData.getPrice()));
-        priceOnlyLabel.setText(Integer.toString((mainData.getPrice()-arrayUtil.sumArray(mainData.getSumСosts()))));
+        priceOnlyLabel.setText(Integer.toString((mainData.getPrice()-mainData.getSumСostsInt())));
     }
 
         public void setMain(Main main) {
         this.main = main;
 
 //         Добавление в таблицу данных из наблюдаемого списка
-        tableView.setItems(main.getContractDataAdditionally());
+//        tableView.setItems(main.getContractDataAdditionally());
     }
 
     /**
      * Returns true, если пользователь кликнул OK, в другом случае false.
-     *
-     * @return
      */
     public boolean isOkClicked() {
         return okClicked;
@@ -88,13 +86,12 @@ public class CalculatorController {
     private void handleOk() {
         if (isInputValid()) {
             mainData.setSumСosts(Integer.parseInt(priceField.getText()));
-            dataAdditionally.setQwe(Integer.parseInt(priceField.getText()));
+//            dataAdditionally.setQwe(Integer.parseInt(priceField.getText()));
 
             priceField.clear();
-
-
-            System.out.println(Arrays.toString(mainData.getSumСosts()));
-            System.out.println(dataAdditionally.getQwe());
+            Integer i = 10;
+            Number b = 20;
+            System.out.println(Arrays.toString(mainData.getCosts()));
 
             okClicked = true;
         }

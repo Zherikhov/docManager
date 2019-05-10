@@ -1,11 +1,14 @@
 package docManager.model;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javafx.beans.property.*;
 import docManager.util.LocalDateAdapter;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -18,8 +21,11 @@ public class MainData {
     private final ObjectProperty<LocalDate> timeContract;
     private final IntegerProperty price;
     private final IntegerProperty priceOnly;
-    private int[] sumСosts = new int[10];
-    private IntegerProperty qwe;
+    private final List<StringProperty> nameLink;
+
+    private int[] sumСosts = new int[12];
+
+
 
     /**
      * Конструктор по умолчанию.
@@ -42,11 +48,16 @@ public class MainData {
         this.subjectContract = new SimpleStringProperty();
         this.price = new SimpleIntegerProperty();
         this.priceOnly = new SimpleIntegerProperty();
-        this.qwe = new SimpleIntegerProperty();
+        this.nameLink = FXCollections.observableArrayList();
     }
 
-    public int[] getSumСosts() {
-        return sumСosts;
+    public List<StringProperty> getNameLink() {
+        return nameLink;
+    }
+
+    public List<StringProperty> setNameLink(StringProperty nameLink) {
+        this.nameLink.add(nameLink);
+        return getNameLink();
     }
 
     public Integer getSumСostsInt() {
@@ -57,12 +68,8 @@ public class MainData {
         return temp;
     }
 
-    public IntegerProperty getQwe(){
-        return qwe;
-    }
-
-    public void setQwe(int qwe) {
-        this.qwe.set(qwe);
+    public int[] getCosts(){
+        return sumСosts;
     }
 
     public void setSumСosts(int costs) {
@@ -171,5 +178,37 @@ public class MainData {
 
     public void setPrice(int price) {
         this.price.set(price);
+    }
+}
+
+class Links {
+    private final StringProperty nameLinksL = new SimpleStringProperty();
+    private final StringProperty linksL = new SimpleStringProperty();
+
+    public Links() {
+    }
+
+    public String getNameLinksL() {
+        return nameLinksL.get();
+    }
+
+    public StringProperty nameLinksLProperty() {
+        return nameLinksL;
+    }
+
+    public void setNameLinksL(String nameLinksL) {
+        this.nameLinksL.set(nameLinksL);
+    }
+
+    public String getLinksL() {
+        return linksL.get();
+    }
+
+    public StringProperty linksLProperty() {
+        return linksL;
+    }
+
+    public void setLinksL(String linksL) {
+        this.linksL.set(linksL);
     }
 }

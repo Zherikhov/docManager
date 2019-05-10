@@ -1,7 +1,8 @@
 package docManager.controller;
 
-import docManager.model.DataAdditionally;
+//import docManager.model.DataAdditionally;
 import docManager.util.ArrayUtil;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -18,13 +19,15 @@ public class MainController {
     @FXML
     private TableView<MainData> contractTable;
     @FXML
-    private TableView<MainData> linkTable;
-    @FXML
     private TableColumn<MainData, String> numberContractColumn;
     @FXML
     private TableColumn<MainData, LocalDate> dateExecutionContractColumn;
     @FXML
     private TableColumn<MainData, LocalDate> timeContractColumn;
+    @FXML
+    private TableView<MainData> linkTable;
+    @FXML
+    private TableColumn<MainData, String> contractColumn;
 
     @FXML
     private Label numberContractLabel;
@@ -61,7 +64,9 @@ public class MainController {
         // Инициализация таблицы.
         numberContractColumn.setCellValueFactory(cellData -> cellData.getValue().numberContractProperty());
         dateExecutionContractColumn.setCellValueFactory(cellData -> cellData.getValue().dateExecutionContractProperty());
-        timeContractColumn.setCellValueFactory  (cellData -> cellData.getValue().timeContractProperty());
+        timeContractColumn.setCellValueFactory(cellData -> cellData.getValue().timeContractProperty());
+
+        contractColumn.setCellValueFactory(cellData -> cellData.getValue().getNameLink());
 
         // Очистка дополнительной информации об адресате.
         showContractDetails(null);
@@ -178,9 +183,9 @@ public class MainController {
     private void handleCalculator() {   //разобраться как работает
         MainData selectedData = contractTable.getSelectionModel().getSelectedItem();
         ArrayUtil arrayUtil = new ArrayUtil();
-        DataAdditionally dataAdditionally = new DataAdditionally();
+//        DataAdditionally dataAdditionally = new DataAdditionally();
         if (selectedData != null) {
-            boolean okClicked = main.showCalculatorDialog(selectedData, arrayUtil, dataAdditionally); //?
+            boolean okClicked = main.showCalculatorDialog(selectedData, arrayUtil); //?
             if (okClicked) {
                 showContractDetails(selectedData);
             }
