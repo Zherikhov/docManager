@@ -7,8 +7,12 @@ import java.util.List;
 
 import javafx.beans.property.*;
 import docManager.util.LocalDateAdapter;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+
+import javafx.beans.binding.ListExpression;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -21,11 +25,9 @@ public class MainData {
     private final ObjectProperty<LocalDate> timeContract;
     private final IntegerProperty price;
     private final IntegerProperty priceOnly;
-    private final List<StringProperty> nameLink;
+    private final ListProperty<String> nameLink;
 
     private int[] sumСosts = new int[12];
-
-
 
     /**
      * Конструктор по умолчанию.
@@ -48,17 +50,20 @@ public class MainData {
         this.subjectContract = new SimpleStringProperty();
         this.price = new SimpleIntegerProperty();
         this.priceOnly = new SimpleIntegerProperty();
-        this.nameLink = FXCollections.observableArrayList();
+        this.nameLink  = new SimpleListProperty<>(FXCollections.observableArrayList());
+        this.nameLink.add("qwerty");
+        this.nameLink.add("asdfgh");
     }
 
-    public List<StringProperty> getNameLink() {
+    public ListProperty<String> getNameLink() {
         return nameLink;
     }
 
-    public List<StringProperty> setNameLink(StringProperty nameLink) {
-        this.nameLink.add(nameLink);
+    public ListProperty<String> setNameLink(String nameLink) {
+        this.nameLink.add("qwe");
         return getNameLink();
     }
+
 
     public Integer getSumСostsInt() {
         Integer temp = 0;
@@ -68,7 +73,7 @@ public class MainData {
         return temp;
     }
 
-    public int[] getCosts(){
+    public int[] getCosts() {
         return sumСosts;
     }
 
@@ -181,34 +186,3 @@ public class MainData {
     }
 }
 
-class Links {
-    private final StringProperty nameLinksL = new SimpleStringProperty();
-    private final StringProperty linksL = new SimpleStringProperty();
-
-    public Links() {
-    }
-
-    public String getNameLinksL() {
-        return nameLinksL.get();
-    }
-
-    public StringProperty nameLinksLProperty() {
-        return nameLinksL;
-    }
-
-    public void setNameLinksL(String nameLinksL) {
-        this.nameLinksL.set(nameLinksL);
-    }
-
-    public String getLinksL() {
-        return linksL.get();
-    }
-
-    public StringProperty linksLProperty() {
-        return linksL;
-    }
-
-    public void setLinksL(String linksL) {
-        this.linksL.set(linksL);
-    }
-}

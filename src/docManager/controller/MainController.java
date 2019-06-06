@@ -1,17 +1,18 @@
 package docManager.controller;
 
 //import docManager.model.DataAdditionally;
+
 import docManager.util.ArrayUtil;
 import javafx.beans.property.StringProperty;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 
 import docManager.Main;
 import docManager.model.MainData;
 import docManager.util.DateUtil;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
 
 import java.time.LocalDate;
 
@@ -27,7 +28,9 @@ public class MainController {
     @FXML
     private TableView<MainData> linkTable;
     @FXML
-    private TableColumn<MainData, String> contractColumn;
+    private TableColumn<MainData, ObservableList<String>> contractColumn;
+    @FXML
+    private TableColumn<MainData, ObservableList<String>> linkColumn;
 
     @FXML
     private Label numberContractLabel;
@@ -61,6 +64,7 @@ public class MainController {
      */
     @FXML
     private void initialize() {
+
         // Инициализация таблицы.
         numberContractColumn.setCellValueFactory(cellData -> cellData.getValue().numberContractProperty());
         dateExecutionContractColumn.setCellValueFactory(cellData -> cellData.getValue().dateExecutionContractProperty());
@@ -75,6 +79,40 @@ public class MainController {
         // дополнительную информацию об адресате.
         contractTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> showContractDetails(newValue));
+
+
+        //красим ячейки
+//        timeContractColumn.setCellFactory(column -> {
+//            return new TableCell<MainData, LocalDate>() {
+//                @Override
+//                protected void updateItem(LocalDate item, boolean empty) {
+//                    super.updateItem(item, empty);
+//
+//                    if (item == null || empty) { //If the cell is empty
+//                        setText(null);
+//                        setStyle("");
+//                    } else { //If the cell is not empty
+//
+//                        setText(item); //Put the String data in the cell
+//
+//                        //We get here all the info of the Person of this row
+//                        MainData auxPerson = getTableView().getItems().get(getIndex());
+//
+//                        // Style all persons wich name is "Edgard"
+//                        if (auxPerson.getTimeContract().equals("Edgard")) {
+//                            setTextFill(Color.RED); //The text in red
+//                            setStyle("-fx-background-color: yellow"); //The background of the cell in yellow
+//                        } else {
+//                            //Here I see if the row of this cell is selected or not
+//                            if(getTableView().getSelectionModel().getSelectedItems().contains(auxPerson))
+//                                setTextFill(Color.WHITE);
+//                            else
+//                                setTextFill(Color.BLACK);
+//                        }
+//                    }
+//                }
+//            };
+//        });
     }
 
     /**
@@ -87,6 +125,7 @@ public class MainController {
 
         // Добавление в таблицу данных из наблюдаемого списка
         contractTable.setItems(main.getContractData());
+        linkTable.setItems(main.getContractData());
     }
 
     /**
@@ -102,7 +141,7 @@ public class MainController {
             counterpartyLabel.setText(mainData.getCounterparty());
             subjectContractLabel.setText(mainData.getSubjectContract());
             priceLabel.setText(Integer.toString(mainData.getPrice()));
-            priceOnlyLabel.setText(Integer.toString((mainData.getPrice()-mainData.getSumСostsInt())));
+            priceOnlyLabel.setText(Integer.toString((mainData.getPrice() - mainData.getSumСostsInt())));
 
             dateContractLabel.setText(DateUtil.format(mainData.getDateContract()));
             dateExecutionContractLabel.setText(DateUtil.format(mainData.getDateExecutionContract()));
