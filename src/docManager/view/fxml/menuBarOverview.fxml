@@ -12,7 +12,7 @@
                 <Menu mnemonicParsing="false" text="Файл">
                     <items>
                         <MenuItem mnemonicParsing="false"    text="Создать" />
-                  <MenuItem mnemonicParsing="false"      text="Открыть...">
+                  <MenuItem mnemonicParsing="false"      text="Открыть..." onAction="#handleOpen">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>

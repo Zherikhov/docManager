@@ -3,12 +3,14 @@ package docManager.controller;
 //import docManager.model.DataAdditionally;
 
 import docManager.util.ArrayUtil;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import docManager.Main;
+import docManager.model.Attachment;
 import docManager.model.MainData;
 import docManager.util.DateUtil;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -26,11 +28,11 @@ public class MainController {
     @FXML
     private TableColumn<MainData, LocalDate> timeContractColumn;
     @FXML
-    private TableView<MainData> linkTable;
+    private TableView<Attachment> linkTable;
     @FXML
-    private TableColumn<MainData, ObservableList<String>> contractColumn;
+    private TableColumn<Attachment, String> contractColumn;
     @FXML
-    private TableColumn<MainData, ObservableList<String>> linkColumn;
+    private TableColumn<Attachment, String> linkColumn;
 
     @FXML
     private Label numberContractLabel;
@@ -70,8 +72,9 @@ public class MainController {
         dateExecutionContractColumn.setCellValueFactory(cellData -> cellData.getValue().dateExecutionContractProperty());
         timeContractColumn.setCellValueFactory(cellData -> cellData.getValue().timeContractProperty());
 
-        contractColumn.setCellValueFactory(cellData -> cellData.getValue().getNameLink());
-
+        contractColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getContract().getNumberContract()));
+        linkColumn.setCellValueFactory(new PropertyValueFactory<>("link"));
+        
         // Очистка дополнительной информации об адресате.
         showContractDetails(null);
 
@@ -125,7 +128,14 @@ public class MainController {
 
         // Добавление в таблицу данных из наблюдаемого списка
         contractTable.setItems(main.getContractData());
-        linkTable.setItems(main.getContractData());
+        
+        
+        contractTable.getSelectionModel().selectedItemProperty().addListener( (ov,o,n) -> {
+        	if(n!= null){
+        		linkTable.setItems(n.getNameLink());
+        	}
+        });
+        
     }
 
     /**
