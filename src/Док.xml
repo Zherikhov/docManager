@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mainData>
+    <mainData>
+        <counterparty>Пробный</counterparty>
+        <dateContract>2019-04-08</dateContract>
+        <dateExecutionContract>2019-04-08</dateExecutionContract>
+        <numberContract>1001</numberContract>
+        <price>554000</price>
+        <priceOnly>0</priceOnly>
+        <subjectContract>Тестирование</subjectContract>
+        <timeContract>2019-04-09</timeContract>
+    </mainData>
+    <mainData>
+        <counterparty>Ланит</counterparty>
+        <dateContract>2019-04-09</dateContract>
+        <dateExecutionContract>2019-04-10</dateExecutionContract>
+        <numberContract>1002</numberContract>
+        <price>103545</price>
+        <priceOnly>0</priceOnly>
+        <subjectContract>Поставка</subjectContract>
+        <timeContract>2019-04-11</timeContract>
+    </mainData>
+    <mainData>
+        <counterparty>Ростелеком</counterparty>
+        <dateContract>2019-04-12</dateContract>
+        <dateExecutionContract>2019-04-13</dateExecutionContract>
+        <numberContract>1003</numberContract>
+        <price>604500</price>
+        <priceOnly>0</priceOnly>
+        <subjectContract>интернет</subjectContract>
+        <timeContract>2020-04-13</timeContract>
+    </mainData>
+</mainData>
