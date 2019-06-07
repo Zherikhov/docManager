@@ -11,7 +11,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-
 import javafx.beans.binding.ListExpression;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -25,7 +24,8 @@ public class MainData {
     private final ObjectProperty<LocalDate> timeContract;
     private final IntegerProperty price;
     private final IntegerProperty priceOnly;
-    private final ListProperty<String> nameLink;
+    private final ListProperty<Attachment> nameLink;
+    private final ListProperty<Attachment> costs;
 
     private int[] sumСosts = new int[12];
 
@@ -50,20 +50,27 @@ public class MainData {
         this.subjectContract = new SimpleStringProperty();
         this.price = new SimpleIntegerProperty();
         this.priceOnly = new SimpleIntegerProperty();
-        this.nameLink  = new SimpleListProperty<>(FXCollections.observableArrayList());
-        this.nameLink.add("qwerty");
-        this.nameLink.add("asdfgh");
+        this.nameLink = new SimpleListProperty<>(FXCollections.observableArrayList());
+        this.costs = new SimpleListProperty<>(FXCollections.observableArrayList());
     }
 
-    public ListProperty<String> getNameLink() {
+    public ListProperty<Attachment> getCostsEx() {
         return nameLink;
     }
 
-    public ListProperty<String> setNameLink(String nameLink) {
-        this.nameLink.add("qwe");
+    public ListProperty<Attachment> setCosts(String nameLink) {
+        this.nameLink.add(new Attachment(this, nameLink));
         return getNameLink();
     }
 
+    public ListProperty<Attachment> getNameLink() {
+        return nameLink;
+    }
+
+    public ListProperty<Attachment> setNameLink(String nameLink) {
+        this.nameLink.add(new Attachment(this, nameLink));
+        return getNameLink();
+    }
 
     public Integer getSumСostsInt() {
         Integer temp = 0;
@@ -185,4 +192,3 @@ public class MainData {
         this.price.set(price);
     }
 }
-

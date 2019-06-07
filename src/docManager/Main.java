@@ -1,7 +1,6 @@
 package docManager;
 
-import docManager.controller.CalculatorController;
-//import docManager.model.DataAdditionally;
+import docManager.controller.*;
 import docManager.util.ArrayUtil;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -13,9 +12,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import docManager.controller.ContractEditController;
-import docManager.controller.MainController;
-import docManager.controller.MenuBarController;
 import docManager.model.DataListWrapper;
 import docManager.model.MainData;
 
@@ -196,7 +192,37 @@ public class Main extends Application {
         }
     }
 
+    public boolean showAddLink(MainData mainData) {
+        try {
+            // Загружаем fxml-файл и создаём новую сцену
+            // для всплывающего диалогового окна.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("view/fxml/addLink.fxml"));
+            AnchorPane page = loader.load();
 
+            // Создаём диалоговое окно Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Прикрепить файл к документу");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(menuBar);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Передаём адресата в контроллер.
+            AddLinkController controller = loader.getController();
+            controller.setEditStage(dialogStage);
+            controller.setMainData(mainData);
+            controller.setMain(this);
+
+            // Отображаем диалоговое окно и ждём, пока пользователь его не закроет
+            dialogStage.showAndWait();
+
+            return controller.isOkClicked();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     /**
      * Возвращает preference файла адресатов, то есть, последний открытый файл.

@@ -29,7 +29,7 @@ public class CalculatorController {
 
     private Stage editStage;
     private MainData mainData;
-//    private DataAdditionally dataAdditionally;
+    //    private DataAdditionally dataAdditionally;
     private ArrayUtil arrayUtil;
     private boolean okClicked = false;
 
@@ -65,7 +65,7 @@ public class CalculatorController {
         priceOnlyLabel.setText(Integer.toString((mainData.getPrice()-mainData.getSumСostsInt())));
     }
 
-        public void setMain(Main main) {
+    public void setMain(Main main) {
         this.main = main;
 
 //         Добавление в таблицу данных из наблюдаемого списка
@@ -86,11 +86,9 @@ public class CalculatorController {
     private void handleOk() {
         if (isInputValid()) {
             mainData.setSumСosts(Integer.parseInt(priceField.getText()));
-//            dataAdditionally.setQwe(Integer.parseInt(priceField.getText()));
-
             priceField.clear();
-            Integer i = 10;
-            Number b = 20;
+            priceOnlyLabel.setText(Integer.toString((mainData.getPrice()-mainData.getSumСostsInt())));
+
             System.out.println(Arrays.toString(mainData.getCosts()));
 
             okClicked = true;

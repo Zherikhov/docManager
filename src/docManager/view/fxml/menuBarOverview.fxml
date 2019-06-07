@@ -11,27 +11,27 @@
             <menus>
                 <Menu mnemonicParsing="false" text="Файл">
                     <items>
-                        <MenuItem mnemonicParsing="false"    text="Создать" />
-                  <MenuItem mnemonicParsing="false"      text="Открыть...">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator></MenuItem>
-                  <MenuItem mnemonicParsing="false"      text="Сохранить">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator></MenuItem>
-                  <MenuItem mnemonicParsing="false"      text="Сохранить как...">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
-                     </accelerator></MenuItem>
-                  <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Выйти" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleNew"  text="Создать" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleOpen" text="Открыть...">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator></MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#handleSave" text="Сохранить">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator></MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#handleSaveAs" text="Сохранить как...">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                            </accelerator></MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Выйти" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Действия">
                     <items>
                         <MenuItem mnemonicParsing="false" text="Новый документ" />
-                  <MenuItem mnemonicParsing="false" text="Изменить документ" />
-                  <MenuItem mnemonicParsing="false" text="Удалить документ" />
+                        <MenuItem mnemonicParsing="false" text="Изменить документ" />
+                        <MenuItem mnemonicParsing="false" text="Удалить документ" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Справка">

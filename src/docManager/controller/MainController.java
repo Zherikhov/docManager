@@ -3,17 +3,24 @@ package docManager.controller;
 //import docManager.model.DataAdditionally;
 
 import docManager.util.ArrayUtil;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import docManager.Main;
+import docManager.model.Attachment;
 import docManager.model.MainData;
 import docManager.util.DateUtil;
+import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
+import java.awt.*;
+import java.io.File;
 import java.time.LocalDate;
 
 public class MainController {
@@ -26,11 +33,11 @@ public class MainController {
     @FXML
     private TableColumn<MainData, LocalDate> timeContractColumn;
     @FXML
-    private TableView<MainData> linkTable;
+    private TableView<Attachment> linkTable;
     @FXML
-    private TableColumn<MainData, ObservableList<String>> contractColumn;
+    private TableColumn<Attachment, String> contractColumn;
     @FXML
-    private TableColumn<MainData, ObservableList<String>> linkColumn;
+    private TableColumn<Attachment, String> linkColumn;
 
     @FXML
     private Label numberContractLabel;
@@ -70,7 +77,8 @@ public class MainController {
         dateExecutionContractColumn.setCellValueFactory(cellData -> cellData.getValue().dateExecutionContractProperty());
         timeContractColumn.setCellValueFactory(cellData -> cellData.getValue().timeContractProperty());
 
-        contractColumn.setCellValueFactory(cellData -> cellData.getValue().getNameLink());
+        contractColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getContract().getNumberContract()));
+        linkColumn.setCellValueFactory(new PropertyValueFactory<>("link"));
 
         // Очистка дополнительной информации об адресате.
         showContractDetails(null);
@@ -125,7 +133,14 @@ public class MainController {
 
         // Добавление в таблицу данных из наблюдаемого списка
         contractTable.setItems(main.getContractData());
-        linkTable.setItems(main.getContractData());
+
+
+        contractTable.getSelectionModel().selectedItemProperty().addListener( (ov,o,n) -> {
+            if(n!= null){
+                linkTable.setItems(n.getNameLink());
+            }
+        });
+
     }
 
     /**
@@ -222,13 +237,31 @@ public class MainController {
     private void handleCalculator() {   //разобраться как работает
         MainData selectedData = contractTable.getSelectionModel().getSelectedItem();
         ArrayUtil arrayUtil = new ArrayUtil();
-//        DataAdditionally dataAdditionally = new DataAdditionally();
         if (selectedData != null) {
             boolean okClicked = main.showCalculatorDialog(selectedData, arrayUtil); //?
             if (okClicked) {
                 showContractDetails(selectedData);
             }
+        } else {
+            // Ничего не выбрано.
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.initOwner(main.getMenuBar());
+            alert.setTitle("Ошибка");
+            alert.setHeaderText("Договор не выбран.");
+            alert.setContentText("Пожалуйста, выберите необходимый документ для правки.");
 
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    private void addLink() {   //разобраться как работает
+        MainData selectedData = contractTable.getSelectionModel().getSelectedItem();
+        if (selectedData != null) {
+            boolean okClicked = main.showAddLink(selectedData); //?
+            if (okClicked) {
+                showContractDetails(selectedData);
+            }
         } else {
             // Ничего не выбрано.
             Alert alert = new Alert(Alert.AlertType.WARNING);
