@@ -135,6 +135,7 @@ public class Main extends Application {
 
             // Создаём диалоговое окно Stage.
             Stage dialogStage = new Stage();
+            dialogStage.setResizable(false);
             dialogStage.setTitle("Правка договора");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(menuBar);
@@ -160,37 +161,37 @@ public class Main extends Application {
      *
      */
 
-    public boolean showCalculatorDialog(MainData mainData, ArrayUtil arrayUtil) {
-        try {
-            // Загружаем fxml-файл и создаём новую сцену
-            // для всплывающего диалогового окна.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("view/fxml/calculator.fxml"));
-            AnchorPane page = loader.load();
-
-            // Создаём диалоговое окно Stage.
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("Калькулятор");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.initOwner(menuBar);
-            Scene scene = new Scene(page);
-            dialogStage.setScene(scene);
-
-            // Передаём адресата в контроллер.
-            CalculatorController controller = loader.getController();
-            controller.setEditStage(dialogStage);
-            controller.setMainData(mainData, arrayUtil);
-            controller.setMain(this);
-
-            // Отображаем диалоговое окно и ждём, пока пользователь его не закроет
-            dialogStage.showAndWait();
-
-            return controller.isOkClicked();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+//    public boolean showCalculatorDialog(MainData mainData, ArrayUtil arrayUtil) {
+//        try {
+//            // Загружаем fxml-файл и создаём новую сцену
+//            // для всплывающего диалогового окна.
+//            FXMLLoader loader = new FXMLLoader();
+//            loader.setLocation(Main.class.getResource("view/fxml/calculator.fxml"));
+//            AnchorPane page = loader.load();
+//
+//            // Создаём диалоговое окно Stage.
+//            Stage dialogStage = new Stage();
+//            dialogStage.setTitle("Калькулятор");
+//            dialogStage.initModality(Modality.WINDOW_MODAL);
+//            dialogStage.initOwner(menuBar);
+//            Scene scene = new Scene(page);
+//            dialogStage.setScene(scene);
+//
+//            // Передаём адресата в контроллер.
+//            CalculatorController controller = loader.getController();
+//            controller.setEditStage(dialogStage);
+//            controller.setMainData(mainData, arrayUtil);
+//            controller.setMain(this);
+//
+//            // Отображаем диалоговое окно и ждём, пока пользователь его не закроет
+//            dialogStage.showAndWait();
+//
+//            return controller.isOkClicked();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+//    }
 
     public boolean showAddLink(MainData mainData) {
         try {
@@ -202,6 +203,7 @@ public class Main extends Application {
 
             // Создаём диалоговое окно Stage.
             Stage dialogStage = new Stage();
+            dialogStage.setResizable(false);
             dialogStage.setTitle("Прикрепить файл к документу");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(menuBar);
@@ -223,6 +225,40 @@ public class Main extends Application {
             return false;
         }
     }
+
+    public boolean showAddCost(MainData mainData) {
+        try {
+            // Загружаем fxml-файл и создаём новую сцену
+            // для всплывающего диалогового окна.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("view/fxml/addCost.fxml"));
+            AnchorPane page = loader.load();
+
+            // Создаём диалоговое окно Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setResizable(false);
+            dialogStage.setTitle("Указать расход");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(menuBar);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Передаём адресата в контроллер.
+            AddCostController controller = loader.getController();
+            controller.setEditStage(dialogStage);
+            controller.setMainData(mainData);
+            controller.setMain(this);
+
+            // Отображаем диалоговое окно и ждём, пока пользователь его не закроет
+            dialogStage.showAndWait();
+
+            return controller.isOkClicked();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
     /**
      * Возвращает preference файла адресатов, то есть, последний открытый файл.

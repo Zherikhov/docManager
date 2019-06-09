@@ -1,17 +1,10 @@
 package docManager.model;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import javafx.beans.property.*;
 import docManager.util.LocalDateAdapter;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
-import javafx.beans.binding.ListExpression;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -27,7 +20,7 @@ public class MainData {
     private final ListProperty<Attachment> nameLink;
     private final ListProperty<Attachment> costs;
 
-    private int[] sumСosts = new int[12];
+//    private int[] sumСosts = new int[12];
 
     /**
      * Конструктор по умолчанию.
@@ -54,13 +47,32 @@ public class MainData {
         this.costs = new SimpleListProperty<>(FXCollections.observableArrayList());
     }
 
-    public ListProperty<Attachment> getCostsEx() {
-        return nameLink;
+    public ListProperty<Attachment> getCosts() {
+        return costs;
+    }
+
+    public int getCostsInteger() {
+        String tempString;
+        int tempInteger = 0;
+        int theEnd = 0;
+        for (Attachment element: costs) {
+            System.out.println(element);
+
+            tempString = element.toString();
+            System.out.println(tempString);
+
+            tempInteger = Integer.parseInt(tempString);
+            System.out.println(tempInteger);
+
+            theEnd += tempInteger;
+            System.out.println(theEnd);
+        }
+        return theEnd;
     }
 
     public ListProperty<Attachment> setCosts(String nameLink) {
-        this.nameLink.add(new Attachment(this, nameLink));
-        return getNameLink();
+        this.costs.add(new Attachment(this, nameLink));
+        return getCosts();
     }
 
     public ListProperty<Attachment> getNameLink() {
@@ -72,26 +84,26 @@ public class MainData {
         return getNameLink();
     }
 
-    public Integer getSumСostsInt() {
-        Integer temp = 0;
-        for (int i = 0; i < sumСosts.length; i++) {
-            temp = temp + sumСosts[i];
-        }
-        return temp;
-    }
+//    public Integer getSumСostsInt() {
+//        Integer temp = 0;
+//        for (int i = 0; i < sumСosts.length; i++) {
+//            temp = temp + sumСosts[i];
+//        }
+//        return temp;
+//    }
 
-    public int[] getCosts() {
-        return sumСosts;
-    }
+//    public int[] getCosts() {
+//        return sumСosts;
+//    }
 
-    public void setSumСosts(int costs) {
-        for (int i = 0; i < sumСosts.length; i++) {
-            if (sumСosts[i] == 0) {
-                sumСosts[i] = costs;
-                return;
-            }
-        }
-    }
+//    public void setSumСosts(int costs) {
+//        for (int i = 0; i < sumСosts.length; i++) {
+//            if (sumСosts[i] == 0) {
+//                sumСosts[i] = costs;
+//                return;
+//            }
+//        }
+//    }
 
     public int getPriceOnly() {
         return priceOnly.get();

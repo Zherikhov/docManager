@@ -1,26 +1,16 @@
 package docManager.controller;
 
 import docManager.Main;
-//import docManager.model.DataAdditionally;
 import docManager.model.MainData;
-import docManager.util.ArrayUtil;
-import javafx.beans.property.IntegerProperty;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.Arrays;
-
-public class AddLinkController {
+public class AddCostController {
     @FXML
-    private TextField nameDocField;
+    private TextField summField;
+    @FXML
+    private TextField descriptionField;
 
     private Stage editStage;
     private MainData mainData;
@@ -68,8 +58,19 @@ public class AddLinkController {
      */
     @FXML
     private void handleOk() {
+//        if (isInputValid()) {
+//            mainData.setCosts(summField.getText());
+//        }
+
+
         if (isInputValid()) {
-            mainData.setNameLink(nameDocField.getText());
+            mainData.setCosts((summField.getText()));
+            summField.clear();
+//            priceOnlyLabel.setText(Integer.toString((mainData.getPrice()-mainData.getSumСostsInt())));
+
+            System.out.println((mainData.getCosts()));
+
+            okClicked = true;
         }
     }
 
@@ -79,24 +80,6 @@ public class AddLinkController {
     @FXML
     private void handleClose() {
         editStage.close();
-    }
-
-    @FXML
-    private void addFile(){
-        FileChooser fileChooser = new FileChooser();
-
-        // Задаём фильтр расширений
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
-                "All files" , "*.*"
-        );
-        fileChooser.getExtensionFilters().add(extFilter);
-
-        // Показываем диалог загрузки файла
-        File file = fileChooser.showOpenDialog(main.getMenuBar());
-
-        if (file != null) {
-            nameDocField.setText(file.toString());
-        }
     }
 
     /**

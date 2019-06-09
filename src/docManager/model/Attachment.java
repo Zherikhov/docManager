@@ -1,5 +1,9 @@
 package docManager.model;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+
 public class Attachment {
 
     private MainData contract;
@@ -37,4 +41,19 @@ public class Attachment {
         return "Attachment [link=" + link + "]";
     }
 
+    public void openFile(){
+        System.out.println("openFile");
+        String fileName = contract.getNameLink().get(0).toString();
+
+        Desktop desktop = null;
+        if (Desktop.isDesktopSupported()) {
+            desktop = Desktop.getDesktop();
+        }
+
+        try {
+            desktop.open(new File(fileName));
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+    }
 }

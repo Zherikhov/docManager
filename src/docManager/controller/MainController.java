@@ -1,12 +1,7 @@
 package docManager.controller;
 
-//import docManager.model.DataAdditionally;
-
-import docManager.util.ArrayUtil;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -16,11 +11,7 @@ import docManager.model.MainData;
 import docManager.util.DateUtil;
 import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 
-import java.awt.*;
-import java.io.File;
 import java.time.LocalDate;
 
 public class MainController {
@@ -38,6 +29,13 @@ public class MainController {
     private TableColumn<Attachment, String> contractColumn;
     @FXML
     private TableColumn<Attachment, String> linkColumn;
+
+    @FXML
+    private TableView<Attachment> linkTable1;
+    @FXML
+    private TableColumn<Attachment, String> contractColumn1;
+    @FXML
+    private TableColumn<Attachment, String> linkColumn1;
 
     @FXML
     private Label numberContractLabel;
@@ -79,6 +77,18 @@ public class MainController {
 
         contractColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getContract().getNumberContract()));
         linkColumn.setCellValueFactory(new PropertyValueFactory<>("link"));
+        linkTable.setRowFactory(tv -> {
+            TableRow<Attachment> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                    linkTable.getSelectionModel().getSelectedItem().openFile();
+                }
+            });
+            return row;
+        });
+
+        contractColumn1.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getContract().getNumberContract()));
+        linkColumn1.setCellValueFactory(new PropertyValueFactory<>("link"));
 
         // Очистка дополнительной информации об адресате.
         showContractDetails(null);
@@ -138,6 +148,7 @@ public class MainController {
         contractTable.getSelectionModel().selectedItemProperty().addListener( (ov,o,n) -> {
             if(n!= null){
                 linkTable.setItems(n.getNameLink());
+                linkTable1.setItems(n.getCosts());
             }
         });
 
@@ -156,7 +167,7 @@ public class MainController {
             counterpartyLabel.setText(mainData.getCounterparty());
             subjectContractLabel.setText(mainData.getSubjectContract());
             priceLabel.setText(Integer.toString(mainData.getPrice()));
-            priceOnlyLabel.setText(Integer.toString((mainData.getPrice() - mainData.getSumСostsInt())));
+            priceOnlyLabel.setText(Integer.toString((mainData.getPrice() - mainData.getCostsInteger())));
 
             dateContractLabel.setText(DateUtil.format(mainData.getDateContract()));
             dateExecutionContractLabel.setText(DateUtil.format(mainData.getDateExecutionContract()));
@@ -233,12 +244,32 @@ public class MainController {
         }
     }
 
+//    @FXML
+//    private void handleCalculator() {   //разобраться как работает
+//        MainData selectedData = contractTable.getSelectionModel().getSelectedItem();
+//        ArrayUtil arrayUtil = new ArrayUtil();
+//        if (selectedData != null) {
+//            boolean okClicked = main.showCalculatorDialog(selectedData, arrayUtil); //?
+//            if (okClicked) {
+//                showContractDetails(selectedData);
+//            }
+//        } else {
+//            // Ничего не выбрано.
+//            Alert alert = new Alert(Alert.AlertType.WARNING);
+//            alert.initOwner(main.getMenuBar());
+//            alert.setTitle("Ошибка");
+//            alert.setHeaderText("Договор не выбран.");
+//            alert.setContentText("Пожалуйста, выберите необходимый документ для правки.");
+//
+//            alert.showAndWait();
+//        }
+//    }
+
     @FXML
-    private void handleCalculator() {   //разобраться как работает
+    private void addLink() {   //разобраться как работает
         MainData selectedData = contractTable.getSelectionModel().getSelectedItem();
-        ArrayUtil arrayUtil = new ArrayUtil();
         if (selectedData != null) {
-            boolean okClicked = main.showCalculatorDialog(selectedData, arrayUtil); //?
+            boolean okClicked = main.showAddLink(selectedData); //?
             if (okClicked) {
                 showContractDetails(selectedData);
             }
@@ -255,10 +286,10 @@ public class MainController {
     }
 
     @FXML
-    private void addLink() {   //разобраться как работает
+    private void addCost() {   //разобраться как работает
         MainData selectedData = contractTable.getSelectionModel().getSelectedItem();
         if (selectedData != null) {
-            boolean okClicked = main.showAddLink(selectedData); //?
+            boolean okClicked = main.showAddCost(selectedData); //?
             if (okClicked) {
                 showContractDetails(selectedData);
             }
