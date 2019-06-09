@@ -56,14 +56,11 @@ public class MainData {
         int tempInteger = 0;
         int theEnd = 0;
         for (Attachment element: costs) {
-            System.out.println(element);
-
+//            System.out.println(element);
             tempString = element.toString();
-            System.out.println(tempString);
-
+//            System.out.println(tempString);
             tempInteger = Integer.parseInt(tempString);
-            System.out.println(tempInteger);
-
+//            System.out.println(tempInteger);
             theEnd += tempInteger;
             System.out.println(theEnd);
         }
@@ -202,5 +199,12 @@ public class MainData {
 
     public void setPrice(int price) {
         this.price.set(price);
+    }
+
+    @Override
+    public String toString() {
+        return "MainData{" +
+                "nameLink=" + nameLink +
+                '}';
     }
 }

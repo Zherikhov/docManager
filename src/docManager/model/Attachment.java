@@ -38,12 +38,13 @@ public class Attachment {
 
     @Override
     public String toString() {
-        return "Attachment [link=" + link + "]";
+        return link;
     }
 
     public void openFile(){
         System.out.println("openFile");
-        String fileName = contract.getNameLink().get(0).toString();
+        String fileName = contract.getNameLink().toString();
+        System.out.println(fileName);
 
         Desktop desktop = null;
         if (Desktop.isDesktopSupported()) {

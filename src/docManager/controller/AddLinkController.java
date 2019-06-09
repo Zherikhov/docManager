@@ -70,6 +70,7 @@ public class AddLinkController {
     private void handleOk() {
         if (isInputValid()) {
             mainData.setNameLink(nameDocField.getText());
+            editStage.close();
         }
     }
 

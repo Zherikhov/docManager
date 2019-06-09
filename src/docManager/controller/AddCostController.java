@@ -58,15 +58,9 @@ public class AddCostController {
      */
     @FXML
     private void handleOk() {
-//        if (isInputValid()) {
-//            mainData.setCosts(summField.getText());
-//        }
-
-
         if (isInputValid()) {
             mainData.setCosts((summField.getText()));
             summField.clear();
-//            priceOnlyLabel.setText(Integer.toString((mainData.getPrice()-mainData.getSumСostsInt())));
 
             System.out.println((mainData.getCosts()));
 

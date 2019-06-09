@@ -11,6 +11,7 @@ import docManager.model.MainData;
 import docManager.util.DateUtil;
 import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
 
 import java.time.LocalDate;
 
@@ -133,11 +134,21 @@ public class MainController {
 //        });
     }
 
+    public TableView<Attachment> getLinkTable() {
+        return linkTable;
+    }
+
+    public TableColumn<Attachment, String> getLinkColumn() {
+        return linkColumn;
+    }
+
     /**
      * Вызывается главным приложением, которое даёт на себя ссылку.
      *
      * @param main
      */
+
+
     public void setMain(Main main) {
         this.main = main;
 
