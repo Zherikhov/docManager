@@ -3,22 +3,16 @@ package docManager.controller;
 import docManager.Main;
 //import docManager.model.DataAdditionally;
 import docManager.model.MainData;
-import docManager.util.ArrayUtil;
-import javafx.beans.property.IntegerProperty;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.Arrays;
 
 public class AddLinkController {
+    @FXML
+    private TextField linkDocField;
     @FXML
     private TextField nameDocField;
 
@@ -69,7 +63,7 @@ public class AddLinkController {
     @FXML
     private void handleOk() {
         if (isInputValid()) {
-            mainData.setNameLink(nameDocField.getText());
+            mainData.setNameLink(linkDocField.getText());
             editStage.close();
         }
     }
@@ -96,7 +90,7 @@ public class AddLinkController {
         File file = fileChooser.showOpenDialog(main.getMenuBar());
 
         if (file != null) {
-            nameDocField.setText(file.toString());
+            linkDocField.setText(file.toString());
         }
     }
 

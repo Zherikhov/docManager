@@ -21,7 +21,7 @@
             </rowConstraints>
             <children>
                 <Label text="Сумма:" />
-                <Label prefHeight="17.0" prefWidth="112.0" text="Описание:" GridPane.columnIndex="2" />
+                <Label prefHeight="17.0" prefWidth="112.0" text="Основание:" GridPane.columnIndex="2" />
                 <TextField fx:id="summField" prefHeight="30.0" prefWidth="248.0" GridPane.rowIndex="1" />
                 <Group />
             <TextField fx:id="descriptionField" prefHeight="30.0" prefWidth="316.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />

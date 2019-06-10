@@ -11,7 +11,6 @@ import docManager.model.MainData;
 import docManager.util.DateUtil;
 import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.paint.Color;
 
 import java.time.LocalDate;
 
@@ -32,11 +31,11 @@ public class MainController {
     private TableColumn<Attachment, String> linkColumn;
 
     @FXML
-    private TableView<Attachment> linkTable1;
+    private TableView<Attachment> costsTable;
     @FXML
-    private TableColumn<Attachment, String> contractColumn1;
+    private TableColumn<Attachment, String> descriptionColumn;
     @FXML
-    private TableColumn<Attachment, String> linkColumn1;
+    private TableColumn<Attachment, String> summColumn;
 
     @FXML
     private Label numberContractLabel;
@@ -88,8 +87,8 @@ public class MainController {
             return row;
         });
 
-        contractColumn1.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getContract().getNumberContract()));
-        linkColumn1.setCellValueFactory(new PropertyValueFactory<>("link"));
+        descriptionColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getContract().getNumberContract()));
+        summColumn.setCellValueFactory(new PropertyValueFactory<>("link"));
 
         // Очистка дополнительной информации об адресате.
         showContractDetails(null);
@@ -159,7 +158,7 @@ public class MainController {
         contractTable.getSelectionModel().selectedItemProperty().addListener( (ov,o,n) -> {
             if(n!= null){
                 linkTable.setItems(n.getNameLink());
-                linkTable1.setItems(n.getCosts());
+                costsTable.setItems(n.getCosts());
             }
         });
 

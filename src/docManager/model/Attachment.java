@@ -1,5 +1,7 @@
 package docManager.model;
 
+import docManager.controller.MainController;
+
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -9,6 +11,8 @@ public class Attachment {
     private MainData contract;
 
     private String link;
+
+    private MainController mainController;
 
     public Attachment() {
 
@@ -22,6 +26,10 @@ public class Attachment {
 
     public MainData getContract() {
         return contract;
+    }
+
+    public MainController getMainController (MainController mainController) {
+        return mainController;
     }
 
     public void setContract(MainData contract) {
@@ -43,7 +51,7 @@ public class Attachment {
 
     public void openFile(){
         System.out.println("openFile");
-        String fileName = contract.getNameLink().toString();
+        String fileName = mainController.getLinkTable().getSelectionModel().getSelectedItem().toString();
         System.out.println(fileName);
 
         Desktop desktop = null;

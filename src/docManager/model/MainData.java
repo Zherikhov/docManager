@@ -19,8 +19,7 @@ public class MainData {
     private final IntegerProperty priceOnly;
     private final ListProperty<Attachment> nameLink;
     private final ListProperty<Attachment> costs;
-
-//    private int[] sumСosts = new int[12];
+    private final ListProperty<Attachment> costsDescription;
 
     /**
      * Конструктор по умолчанию.
@@ -45,6 +44,17 @@ public class MainData {
         this.priceOnly = new SimpleIntegerProperty();
         this.nameLink = new SimpleListProperty<>(FXCollections.observableArrayList());
         this.costs = new SimpleListProperty<>(FXCollections.observableArrayList());
+        this.costsDescription = new SimpleListProperty<>(FXCollections.observableArrayList());
+
+    }
+
+    public ListProperty<Attachment> setCostsDescription(String costsTest) {
+        this.costsDescription.add(new Attachment(this, costsTest));
+        return getCostsDescription();
+    }
+
+    public ListProperty<Attachment> getCostsDescription() {
+        return costsDescription;
     }
 
     public ListProperty<Attachment> getCosts() {
@@ -56,11 +66,8 @@ public class MainData {
         int tempInteger = 0;
         int theEnd = 0;
         for (Attachment element: costs) {
-//            System.out.println(element);
             tempString = element.toString();
-//            System.out.println(tempString);
             tempInteger = Integer.parseInt(tempString);
-//            System.out.println(tempInteger);
             theEnd += tempInteger;
             System.out.println(theEnd);
         }

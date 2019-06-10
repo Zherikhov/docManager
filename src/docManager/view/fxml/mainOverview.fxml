@@ -140,20 +140,20 @@
                         </HBox>
                         <TableView fx:id="linkTable" layoutY="404.0" prefHeight="180.0" prefWidth="523.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="404.0">
                             <columns>
-                                <TableColumn fx:id="contractColumn" prefWidth="185.0" text="Договор" />
+                                <TableColumn fx:id="contractColumn" prefWidth="185.0" text="Имя файла" />
                                 <TableColumn fx:id="linkColumn" prefWidth="336.0" text="Ссылка" />
                             </columns>
                             <columnResizePolicy>
                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                             </columnResizePolicy>
                         </TableView>
-                  <TableView fx:id="linkTable1" layoutX="6.0" layoutY="584.0" prefHeight="118.0" prefWidth="523.0" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="584.0">
+                  <TableView fx:id="costsTable" layoutX="6.0" layoutY="584.0" prefHeight="118.0" prefWidth="523.0" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="584.0">
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                      <columns>
-                        <TableColumn fx:id="contractColumn1" prefWidth="349.0" text="Договор" />
-                        <TableColumn fx:id="linkColumn1" prefWidth="172.0" text="Расходы" />
+                        <TableColumn fx:id="descriptionColumn" prefWidth="349.0" text="Основание на списание" />
+                        <TableColumn fx:id="summColumn" prefWidth="172.0" text="Сумма" />
                      </columns>
                   </TableView>
                     </children>
