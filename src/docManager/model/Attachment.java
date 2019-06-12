@@ -12,16 +12,19 @@ public class Attachment {
 
     private String link;
 
+    private String fileName;
+
     private MainController mainController;
 
     public Attachment() {
 
     }
 
-    public Attachment(MainData contract, String link) {
+    public Attachment(MainData contract, String qwerty) {
         super();
         this.contract = contract;
-        this.link = link;
+        this.link = qwerty;
+        this.fileName = qwerty;
     }
 
     public MainData getContract() {
@@ -44,6 +47,14 @@ public class Attachment {
         this.link = link;
     }
 
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
     @Override
     public String toString() {
         return link;
@@ -51,8 +62,14 @@ public class Attachment {
 
     public void openFile(){
         System.out.println("openFile");
-        String fileName = mainController.getLinkTable().getSelectionModel().getSelectedItem().toString();
+
+//        MainData auxPerson = getTableView().getItems().get(getIndex());
+//        System.out.println(auxPerson.toString());
+
+        String fileName = contract.getNameLink().get(0).toString();
         System.out.println(fileName);
+
+
 
         Desktop desktop = null;
         if (Desktop.isDesktopSupported()) {

@@ -22,13 +22,13 @@
             <children>
                 <Label text="Путь к документу и его имя:" />
                 <Label text="Выбрать файл:" GridPane.columnIndex="2" />
-                <TextField fx:id="linkDocField" prefHeight="30.0" prefWidth="274.0" promptText="Путь к документу" GridPane.rowIndex="1" />
+                <TextField fx:id="linkDocField" focusTraversable="false" prefHeight="30.0" prefWidth="270.0" promptText="Путь к документу" GridPane.rowIndex="1" />
                 <Button mnemonicParsing="false" onAction="#addFile" prefHeight="30.0" prefWidth="65.0" text="Файл..." GridPane.columnIndex="2" GridPane.rowIndex="1" />
                 <Group />
             </children>
         </GridPane>
         <Button layoutX="446.0" layoutY="91.0" mnemonicParsing="false" onAction="#handleClose" prefHeight="30.0" prefWidth="65.0" text="Закрыть" AnchorPane.bottomAnchor="9.0" AnchorPane.rightAnchor="14.0" />
         <Button layoutX="441.0" layoutY="91.0" mnemonicParsing="false" onAction="#handleOk" prefHeight="30.0" prefWidth="65.0" text="Принять" AnchorPane.bottomAnchor="9.0" AnchorPane.rightAnchor="94.0" />
-      <TextField fx:id="nameDocField" layoutX="14.0" layoutY="91.0" prefHeight="30.0" prefWidth="274.0" promptText="Имя документа" />
+      <TextField fx:id="nameDocField" focusTraversable="false" layoutX="14.0" layoutY="91.0" prefHeight="30.0" prefWidth="280.0" promptText="Имя документа" />
     </children>
 </AnchorPane>

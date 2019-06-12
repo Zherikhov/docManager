@@ -11,8 +11,17 @@ import docManager.model.MainData;
 import docManager.util.DateUtil;
 import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class MainController {
     @FXML
@@ -68,7 +77,7 @@ public class MainController {
      * Инициализация класса-контроллера.
      */
     @FXML
-    private void initialize() {
+    private void initialize() throws InterruptedException, ParseException {
 
         // Инициализация таблицы.
         numberContractColumn.setCellValueFactory(cellData -> cellData.getValue().numberContractProperty());
@@ -87,7 +96,7 @@ public class MainController {
             return row;
         });
 
-        descriptionColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getContract().getNumberContract()));
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("fileName"));
         summColumn.setCellValueFactory(new PropertyValueFactory<>("link"));
 
         // Очистка дополнительной информации об адресате.
@@ -99,46 +108,40 @@ public class MainController {
                 (observable, oldValue, newValue) -> showContractDetails(newValue));
 
 
-        //красим ячейки
-//        timeContractColumn.setCellFactory(column -> {
-//            return new TableCell<MainData, LocalDate>() {
-//                @Override
-//                protected void updateItem(LocalDate item, boolean empty) {
-//                    super.updateItem(item, empty);
-//
-//                    if (item == null || empty) { //If the cell is empty
-//                        setText(null);
-//                        setStyle("");
-//                    } else { //If the cell is not empty
-//
-//                        setText(item); //Put the String data in the cell
-//
-//                        //We get here all the info of the Person of this row
-//                        MainData auxPerson = getTableView().getItems().get(getIndex());
-//
-//                        // Style all persons wich name is "Edgard"
-//                        if (auxPerson.getTimeContract().equals("Edgard")) {
-//                            setTextFill(Color.RED); //The text in red
-//                            setStyle("-fx-background-color: yellow"); //The background of the cell in yellow
-//                        } else {
-//                            //Here I see if the row of this cell is selected or not
-//                            if(getTableView().getSelectionModel().getSelectedItems().contains(auxPerson))
-//                                setTextFill(Color.WHITE);
-//                            else
-//                                setTextFill(Color.BLACK);
-//                        }
-//                    }
-//                }
-//            };
-//        });
-    }
+        // Красим ячейки
+        timeContractColumn.setCellFactory(column -> {
+            return new TableCell<MainData, LocalDate>() {
+                @Override
+                protected void updateItem(LocalDate item, boolean empty) {
+                    super.updateItem(item, empty);
 
-    public TableView<Attachment> getLinkTable() {
-        return linkTable;
-    }
+                    if (item == null || empty) { //Если ячейка пустая
+                        setText(null);
+                        setStyle("");
+                    } else { //Если ячейка не пустая
 
-    public TableColumn<Attachment, String> getLinkColumn() {
-        return linkColumn;
+                        setText(item.toString()); //Помещаем данные в ячейку
+//                        System.out.println(item);
+
+                        // Мы получаем здесь всю информацию о этой строки
+                        MainData auxPerson = getTableView().getItems().get(getIndex());
+//                        System.out.println(auxPerson.getTimeContract());
+
+
+                        // Меняем стиль если...
+                        String qwe = GetCalendar.getResult(auxPerson.getCurrentTime(), auxPerson.getTimeContract());
+                        if (qwe.equals("P10D") || qwe.equals("P9D") || qwe.equals("P8D")  || qwe.equals("P7D")
+                                || qwe.equals("P6D")  || qwe.equals("P5D")  || qwe.equals("P4D")  || qwe.equals("P3D")
+                                || qwe.equals("P2D")  || qwe.equals("P1D") || qwe.equals("P0D"))  {
+                            setTextFill(Color.RED);
+//                            setStyle("-fx-background-color: yellow");
+                            setStyle("-fx-border-color: red");
+
+                        }
+                    }
+                }
+            };
+        });
     }
 
     /**
@@ -155,13 +158,13 @@ public class MainController {
         contractTable.setItems(main.getContractData());
 
 
-        contractTable.getSelectionModel().selectedItemProperty().addListener( (ov,o,n) -> {
-            if(n!= null){
+        contractTable.getSelectionModel().selectedItemProperty().addListener((ov, o, n) -> {
+            if (n != null) {
                 linkTable.setItems(n.getNameLink());
                 costsTable.setItems(n.getCosts());
+//                costsTable.setItems(n.getCostsDescription());
             }
         });
-
     }
 
     /**
@@ -254,27 +257,6 @@ public class MainController {
         }
     }
 
-//    @FXML
-//    private void handleCalculator() {   //разобраться как работает
-//        MainData selectedData = contractTable.getSelectionModel().getSelectedItem();
-//        ArrayUtil arrayUtil = new ArrayUtil();
-//        if (selectedData != null) {
-//            boolean okClicked = main.showCalculatorDialog(selectedData, arrayUtil); //?
-//            if (okClicked) {
-//                showContractDetails(selectedData);
-//            }
-//        } else {
-//            // Ничего не выбрано.
-//            Alert alert = new Alert(Alert.AlertType.WARNING);
-//            alert.initOwner(main.getMenuBar());
-//            alert.setTitle("Ошибка");
-//            alert.setHeaderText("Договор не выбран.");
-//            alert.setContentText("Пожалуйста, выберите необходимый документ для правки.");
-//
-//            alert.showAndWait();
-//        }
-//    }
-
     @FXML
     private void addLink() {   //разобраться как работает
         MainData selectedData = contractTable.getSelectionModel().getSelectedItem();
@@ -313,5 +295,16 @@ public class MainController {
 
             alert.showAndWait();
         }
+    }
+}
+
+class GetCalendar {
+
+    public static String getResult(LocalDate firstDate, LocalDate secondDate) {
+        Period period = Period.between(secondDate, firstDate);
+//        System.out.println(period.getYears() + "." + period.getMonths() + "." + period.getDays());
+        String s = period.toString();
+        System.out.println(s);
+        return s;
     }
 }

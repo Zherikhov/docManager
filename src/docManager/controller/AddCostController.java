@@ -59,14 +59,14 @@ public class AddCostController {
     @FXML
     private void handleOk() {
         if (isInputValid()) {
-            mainData.setCosts((summField.getText()));
-            mainData.setCostsDescription((descriptionField.getText())); //
+            mainData.setCosts(summField.getText());
+            mainData.setCostsDescription(descriptionField.getText()); //
 
             summField.clear();
             descriptionField.clear(); //
 
-            System.out.println((mainData.getCosts()));
-            System.out.println((mainData.getCostsDescription())); //
+            System.out.println(mainData.getCosts());
+            System.out.println(mainData.getCostsDescription()); //
 
             editStage.close();
             okClicked = true;

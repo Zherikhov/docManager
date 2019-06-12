@@ -1,7 +1,6 @@
 package docManager;
 
 import docManager.controller.*;
-import docManager.util.ArrayUtil;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +19,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.prefs.Preferences;
 
 public class Main extends Application {
@@ -32,19 +32,11 @@ public class Main extends Application {
      */
     private ObservableList<MainData> contractData = FXCollections.observableArrayList();
 
-    /**
-     * Возвращает данные в виде наблюдаемого списка документов.
-     * @return
-     */
     public ObservableList<MainData> getContractData() {
         return contractData;
     }
 
-    /**
-     * Конструктор
-     */
     public Main() {
-
     }
 
     @Override
@@ -157,42 +149,6 @@ public class Main extends Application {
         }
     }
 
-    /**
-     *
-     */
-
-//    public boolean showCalculatorDialog(MainData mainData, ArrayUtil arrayUtil) {
-//        try {
-//            // Загружаем fxml-файл и создаём новую сцену
-//            // для всплывающего диалогового окна.
-//            FXMLLoader loader = new FXMLLoader();
-//            loader.setLocation(Main.class.getResource("view/fxml/calculator.fxml"));
-//            AnchorPane page = loader.load();
-//
-//            // Создаём диалоговое окно Stage.
-//            Stage dialogStage = new Stage();
-//            dialogStage.setTitle("Калькулятор");
-//            dialogStage.initModality(Modality.WINDOW_MODAL);
-//            dialogStage.initOwner(menuBar);
-//            Scene scene = new Scene(page);
-//            dialogStage.setScene(scene);
-//
-//            // Передаём адресата в контроллер.
-//            CalculatorController controller = loader.getController();
-//            controller.setEditStage(dialogStage);
-//            controller.setMainData(mainData, arrayUtil);
-//            controller.setMain(this);
-//
-//            // Отображаем диалоговое окно и ждём, пока пользователь его не закроет
-//            dialogStage.showAndWait();
-//
-//            return controller.isOkClicked();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-//    }
-
     public boolean showAddLink(MainData mainData) {
         try {
             // Загружаем fxml-файл и создаём новую сцену
@@ -289,12 +245,12 @@ public class Main extends Application {
             prefs.put("filePath", file.getPath());
 
             // Обновление заглавия сцены.
-            menuBar.setTitle("SpringTime - " + file.getName());
+            menuBar.setTitle("DocManager - " + file.getName());
         } else {
             prefs.remove("filePath");
 
             // Обновление заглавия сцены.
-            menuBar.setTitle("SpringTime");
+            menuBar.setTitle("DocManager");
         }
     }
 
@@ -306,8 +262,7 @@ public class Main extends Application {
      */
     public void loadDataFromFile(File file) {
         try {
-            JAXBContext context = JAXBContext
-                    .newInstance(DataListWrapper.class);
+            JAXBContext context = JAXBContext.newInstance(DataListWrapper.class);
             Unmarshaller um = context.createUnmarshaller();
 
             // Чтение XML из файла и демаршализация.

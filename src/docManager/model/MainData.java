@@ -1,6 +1,9 @@
 package docManager.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 import javafx.beans.property.*;
 import docManager.util.LocalDateAdapter;
@@ -79,7 +82,8 @@ public class MainData {
         return getCosts();
     }
 
-    public ListProperty<Attachment> getNameLink() {
+    public ListProperty<Attachment>
+    getNameLink() {
         return nameLink;
     }
 
@@ -87,27 +91,6 @@ public class MainData {
         this.nameLink.add(new Attachment(this, nameLink));
         return getNameLink();
     }
-
-//    public Integer getSumСostsInt() {
-//        Integer temp = 0;
-//        for (int i = 0; i < sumСosts.length; i++) {
-//            temp = temp + sumСosts[i];
-//        }
-//        return temp;
-//    }
-
-//    public int[] getCosts() {
-//        return sumСosts;
-//    }
-
-//    public void setSumСosts(int costs) {
-//        for (int i = 0; i < sumСosts.length; i++) {
-//            if (sumСosts[i] == 0) {
-//                sumСosts[i] = costs;
-//                return;
-//            }
-//        }
-//    }
 
     public int getPriceOnly() {
         return priceOnly.get();
@@ -188,6 +171,14 @@ public class MainData {
         return timeContract.get();
     }
 
+    public LocalDate getCurrentTime(){
+        LocalDate date = LocalDate.now();
+//        System.out.println(date);
+
+
+        return date;
+    }
+
     public ObjectProperty<LocalDate> timeContractProperty() {
         return timeContract;
     }
@@ -213,5 +204,18 @@ public class MainData {
         return "MainData{" +
                 "nameLink=" + nameLink +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MainData mainData = (MainData) o;
+        return Objects.equals(timeContract, mainData.timeContract);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(timeContract);
     }
 }
