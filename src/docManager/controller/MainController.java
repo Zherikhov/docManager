@@ -11,6 +11,7 @@ import docManager.model.MainData;
 import docManager.util.DateUtil;
 import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 
 import java.text.ParseException;
@@ -79,21 +80,38 @@ public class MainController {
     @FXML
     private void initialize() throws InterruptedException, ParseException {
 
+
         // Инициализация таблицы.
         numberContractColumn.setCellValueFactory(cellData -> cellData.getValue().numberContractProperty());
         dateExecutionContractColumn.setCellValueFactory(cellData -> cellData.getValue().dateExecutionContractProperty());
         timeContractColumn.setCellValueFactory(cellData -> cellData.getValue().timeContractProperty());
 
-        contractColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getContract().getNumberContract()));
+        contractColumn.setCellValueFactory(new PropertyValueFactory<>("fileName"));
         linkColumn.setCellValueFactory(new PropertyValueFactory<>("link"));
         linkTable.setRowFactory(tv -> {
             TableRow<Attachment> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
-                    linkTable.getSelectionModel().getSelectedItem().openFile();
+                    String selectedItem = linkTable.getSelectionModel().getSelectedItem().toString();
+                    linkTable.getSelectionModel().getSelectedItem().openFile(selectedItem);
                 }
             });
             return row;
+        });
+        linkTable.setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.SECONDARY) {
+//                System.out.println("test2");
+                Attachment selectedItem = linkTable.getSelectionModel().getSelectedItem();
+                linkTable.getItems().remove(selectedItem);
+            }
+        });
+
+        costsTable.setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.SECONDARY) {
+//                System.out.println("test2");
+                Attachment selectedItem = costsTable.getSelectionModel().getSelectedItem();
+                costsTable.getItems().remove(selectedItem);
+            }
         });
 
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("fileName"));
@@ -125,7 +143,7 @@ public class MainController {
 
                         // Мы получаем здесь всю информацию о этой строки
                         MainData auxPerson = getTableView().getItems().get(getIndex());
-//                        System.out.println(auxPerson.getTimeContract());
+                        System.out.println(auxPerson.getCosts().toString());
 
 
                         // Меняем стиль если...

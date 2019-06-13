@@ -3,6 +3,7 @@ package docManager.controller;
 import docManager.Main;
 import docManager.model.MainData;
 import javafx.fxml.FXML;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -10,11 +11,12 @@ public class AddCostController {
     @FXML
     private TextField summField;
     @FXML
-    private TextField descriptionField;
+    private TextArea descriptionField;
 
     private Stage editStage;
     private MainData mainData;
     private boolean okClicked = false;
+
 
     // Ссылка на главное приложение.
     private Main main;
@@ -59,14 +61,10 @@ public class AddCostController {
     @FXML
     private void handleOk() {
         if (isInputValid()) {
-            mainData.setCosts(summField.getText());
-            mainData.setCostsDescription(descriptionField.getText()); //
+            mainData.setCosts(summField.getText(), descriptionField.getText());
 
             summField.clear();
             descriptionField.clear(); //
-
-            System.out.println(mainData.getCosts());
-            System.out.println(mainData.getCostsDescription()); //
 
             editStage.close();
             okClicked = true;

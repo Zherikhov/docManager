@@ -63,7 +63,7 @@ public class AddLinkController {
     @FXML
     private void handleOk() {
         if (isInputValid()) {
-            mainData.setNameLink(linkDocField.getText());
+            mainData.setNameLink(linkDocField.getText(), nameDocField.getText());
             editStage.close();
         }
     }

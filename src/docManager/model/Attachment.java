@@ -20,11 +20,11 @@ public class Attachment {
 
     }
 
-    public Attachment(MainData contract, String qwerty) {
+    public Attachment(MainData contract, String link, String fileName) {
         super();
         this.contract = contract;
-        this.link = qwerty;
-        this.fileName = qwerty;
+        this.link = link;
+        this.fileName = fileName;
     }
 
     public MainData getContract() {
@@ -60,24 +60,14 @@ public class Attachment {
         return link;
     }
 
-    public void openFile(){
-        System.out.println("openFile");
-
-//        MainData auxPerson = getTableView().getItems().get(getIndex());
-//        System.out.println(auxPerson.toString());
-
-        String fileName = contract.getNameLink().get(0).toString();
-        System.out.println(fileName);
-
-
-
-        Desktop desktop = null;
+    public void openFile(String fileLink){
+         Desktop desktop = null;
         if (Desktop.isDesktopSupported()) {
             desktop = Desktop.getDesktop();
         }
 
         try {
-            desktop.open(new File(fileName));
+            desktop.open(new File(fileLink));
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }

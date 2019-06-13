@@ -1,14 +1,11 @@
 package docManager.model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
-
+//import docManager.util.ListPropertyAdapter;
 import javafx.beans.property.*;
 import docManager.util.LocalDateAdapter;
 import javafx.collections.FXCollections;
-
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 public class MainData {
@@ -51,15 +48,16 @@ public class MainData {
 
     }
 
-    public ListProperty<Attachment> setCostsDescription(String costsTest) {
-        this.costsDescription.add(new Attachment(this, costsTest));
-        return getCostsDescription();
-    }
+//    public ListProperty<Attachment> setCostsDescription(String costsTest, String qwerty) {
+//        this.costsDescription.add(new Attachment(this, costsTest, qwerty));
+//        return getCostsDescription();
+//    }
 
     public ListProperty<Attachment> getCostsDescription() {
         return costsDescription;
     }
 
+//    @XmlJavaTypeAdapter(ListPropertyAdapter.class)
     public ListProperty<Attachment> getCosts() {
         return costs;
     }
@@ -77,18 +75,19 @@ public class MainData {
         return theEnd;
     }
 
-    public ListProperty<Attachment> setCosts(String nameLink) {
-        this.costs.add(new Attachment(this, nameLink));
+    public ListProperty<Attachment> setCosts(String nameLink, String qwerty) {
+        this.costs.add(new Attachment(this, nameLink, qwerty));
         return getCosts();
     }
 
+//    @XmlJavaTypeAdapter(ListPropertyAdapter.class)
     public ListProperty<Attachment>
     getNameLink() {
         return nameLink;
     }
 
-    public ListProperty<Attachment> setNameLink(String nameLink) {
-        this.nameLink.add(new Attachment(this, nameLink));
+    public ListProperty<Attachment> setNameLink(String nameLink, String qwerty) {
+        this.nameLink.add(new Attachment(this, nameLink, qwerty));
         return getNameLink();
     }
 
