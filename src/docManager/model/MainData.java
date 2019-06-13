@@ -3,6 +3,7 @@ package docManager.model;
 import java.time.LocalDate;
 import java.util.Objects;
 //import docManager.util.ListPropertyAdapter;
+import docManager.util.ListPropertyAdapter;
 import javafx.beans.property.*;
 import docManager.util.LocalDateAdapter;
 import javafx.collections.FXCollections;
@@ -57,7 +58,7 @@ public class MainData {
         return costsDescription;
     }
 
-//    @XmlJavaTypeAdapter(ListPropertyAdapter.class)
+    @XmlJavaTypeAdapter(ListPropertyAdapter.class)
     public ListProperty<Attachment> getCosts() {
         return costs;
     }
@@ -80,9 +81,8 @@ public class MainData {
         return getCosts();
     }
 
-//    @XmlJavaTypeAdapter(ListPropertyAdapter.class)
-    public ListProperty<Attachment>
-    getNameLink() {
+    @XmlJavaTypeAdapter(ListPropertyAdapter.class)
+    public ListProperty<Attachment> getNameLink() {
         return nameLink;
     }
 
