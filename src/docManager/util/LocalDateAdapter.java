@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  * Адаптер (для JAXB) для преобразования между типом LocalDate и строковым
- * представлением даты, например как '2012-12-03'.
+ * представлением даты, например как '2019-12-03'.
  */
 public class LocalDateAdapter extends XmlAdapter<String, LocalDate> {
 

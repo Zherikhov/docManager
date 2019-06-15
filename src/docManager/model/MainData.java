@@ -2,7 +2,6 @@ package docManager.model;
 
 import java.time.LocalDate;
 import java.util.Objects;
-//import docManager.util.ListPropertyAdapter;
 import docManager.util.ListPropertyAdapter;
 import javafx.beans.property.*;
 import docManager.util.LocalDateAdapter;
@@ -20,7 +19,7 @@ public class MainData {
     private final IntegerProperty priceOnly;
     private final ListProperty<Attachment> nameLink;
     private final ListProperty<Attachment> costs;
-    private final ListProperty<Attachment> costsDescription;
+//    private final ListProperty<Attachment> costsDescription;
 
     /**
      * Конструктор по умолчанию.
@@ -45,17 +44,6 @@ public class MainData {
         this.priceOnly = new SimpleIntegerProperty();
         this.nameLink = new SimpleListProperty<>(FXCollections.observableArrayList());
         this.costs = new SimpleListProperty<>(FXCollections.observableArrayList());
-        this.costsDescription = new SimpleListProperty<>(FXCollections.observableArrayList());
-
-    }
-
-//    public ListProperty<Attachment> setCostsDescription(String costsTest, String qwerty) {
-//        this.costsDescription.add(new Attachment(this, costsTest, qwerty));
-//        return getCostsDescription();
-//    }
-
-    public ListProperty<Attachment> getCostsDescription() {
-        return costsDescription;
     }
 
     @XmlJavaTypeAdapter(ListPropertyAdapter.class)
@@ -65,7 +53,7 @@ public class MainData {
 
     public int getCostsInteger() {
         String tempString;
-        int tempInteger = 0;
+        int tempInteger;
         int theEnd = 0;
         for (Attachment element: costs) {
             tempString = element.toString();
@@ -172,9 +160,6 @@ public class MainData {
 
     public LocalDate getCurrentTime(){
         LocalDate date = LocalDate.now();
-//        System.out.println(date);
-
-
         return date;
     }
 

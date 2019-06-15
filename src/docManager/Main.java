@@ -19,7 +19,6 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 import java.util.prefs.Preferences;
 
 public class Main extends Application {
@@ -42,7 +41,6 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         this.menuBar = primaryStage;
-        this.menuBar.setTitle("");
 
         initMenuBar();
         initMainWindow();
@@ -110,7 +108,7 @@ public class Main extends Application {
     }
 
     /**
-     * Открывает диалоговое окно для изменения деталей указанного адресата.
+     * Открывает диалоговое окно для изменения деталей указанного договора.
      * Если пользователь кликнул OK, то изменения сохраняются в предоставленном
      * объекте адресата и возвращается значение true.
      *
@@ -128,7 +126,7 @@ public class Main extends Application {
             // Создаём диалоговое окно Stage.
             Stage dialogStage = new Stage();
             dialogStage.setResizable(false);
-            dialogStage.setTitle("Правка договора");
+            dialogStage.setTitle("Редактирование договора");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(menuBar);
             Scene scene = new Scene(page);
@@ -149,6 +147,14 @@ public class Main extends Application {
         }
     }
 
+    /**
+     * Открывает диалоговое окно для добавления документов в указанный договор.
+     * Если пользователь кликнул OK, то изменения сохраняются в предоставленном
+     * объекте документа и возвращается значение true.
+     *
+     * @param mainData - объект адресата, который надо изменить
+     * @return true, если пользователь кликнул OK, в противном случае false.
+     */
     public boolean showAddLink(MainData mainData) {
         try {
             // Загружаем fxml-файл и создаём новую сцену
@@ -182,6 +188,14 @@ public class Main extends Application {
         }
     }
 
+    /**
+     * Открывает диалоговое окно для добавление расходов в указанном договоре.
+     * Если пользователь кликнул OK, то изменения сохраняются в предоставленном
+     * объекте адресата и возвращается значение true.
+     *
+     * @param mainData - объект адресата, который надо изменить
+     * @return true, если пользователь кликнул OK, в противном случае false.
+     */
     public boolean showAddCost(MainData mainData) {
         try {
             // Загружаем fxml-файл и создаём новую сцену
@@ -217,7 +231,7 @@ public class Main extends Application {
 
 
     /**
-     * Возвращает preference файла адресатов, то есть, последний открытый файл.
+     * Возвращает preference файла документов, то есть, последний открытый файл.
      * Этот preference считывается из реестра, специфичного для конкретной
      * операционной системы. Если preference не был найден, то возвращается null.
      *
@@ -255,8 +269,8 @@ public class Main extends Application {
     }
 
     /**
-     * Загружает информацию об адресатах из указанного файла.
-     * Текущая информация об адресатах будет заменена.
+     * Загружает информацию  документов из указанного файла.
+     * Текущая информация документов будет заменена.
      *
      * @param file
      */
@@ -285,7 +299,7 @@ public class Main extends Application {
     }
 
     /**
-     * Сохраняет текущую информацию об адресатах в указанном файле.
+     * Сохраняет текущую информацию документов в указанном файле.
      *
      * @param file
      */

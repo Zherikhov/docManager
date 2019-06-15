@@ -164,7 +164,6 @@ public class ContractEditController {
             alert.setTitle("Ошибка");
             alert.setHeaderText("Пожалуйста, введите данные корректно!");
             alert.setContentText(errorMessage);
-
             alert.showAndWait();
 
             return false;

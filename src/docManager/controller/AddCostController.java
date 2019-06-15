@@ -23,7 +23,6 @@ public class AddCostController {
 
     @FXML
     private void initialize() {
-
     }
 
     /**
@@ -83,8 +82,8 @@ public class AddCostController {
      * Проверяем правильность ввода
      * @return
      */
+    //TODO
     private boolean isInputValid() {
-
         return true;
     }
 }

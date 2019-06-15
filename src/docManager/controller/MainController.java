@@ -1,7 +1,6 @@
 package docManager.controller;
 
-import javafx.beans.property.SimpleStringProperty;
-
+import docManager.util.AlertWindow;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -15,14 +14,8 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Period;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 public class MainController {
     @FXML
@@ -80,7 +73,6 @@ public class MainController {
     @FXML
     private void initialize() throws InterruptedException, ParseException {
 
-
         // Инициализация таблицы.
         numberContractColumn.setCellValueFactory(cellData -> cellData.getValue().numberContractProperty());
         dateExecutionContractColumn.setCellValueFactory(cellData -> cellData.getValue().dateExecutionContractProperty());
@@ -98,24 +90,21 @@ public class MainController {
             });
             return row;
         });
+
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("fileName"));
+        summColumn.setCellValueFactory(new PropertyValueFactory<>("link"));
+
         linkTable.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.SECONDARY) {
-//                System.out.println("test2");
-                Attachment selectedItem = linkTable.getSelectionModel().getSelectedItem();
-                linkTable.getItems().remove(selectedItem);
+                AlertWindow.showAlertConfirmation("Вы действительно хотите удалить ссылку?", linkTable);
             }
         });
 
         costsTable.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.SECONDARY) {
-//                System.out.println("test2");
-                Attachment selectedItem = costsTable.getSelectionModel().getSelectedItem();
-                costsTable.getItems().remove(selectedItem);
+                AlertWindow.showAlertConfirmation("Вы действительно хотите удалить списание?", costsTable);
             }
         });
-
-        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("fileName"));
-        summColumn.setCellValueFactory(new PropertyValueFactory<>("link"));
 
         // Очистка дополнительной информации об адресате.
         showContractDetails(null);
@@ -138,36 +127,33 @@ public class MainController {
                         setStyle("");
                     } else { //Если ячейка не пустая
 
+                        setTextFill(Color.BLACK);
+                        setStyle(null);
                         setText(item.toString()); //Помещаем данные в ячейку
-//                        System.out.println(item);
 
                         // Мы получаем здесь всю информацию о этой строки
                         MainData auxPerson = getTableView().getItems().get(getIndex());
-                        System.out.println(auxPerson.getCosts().toString());
-
+//                        System.out.println(auxPerson.getCosts().toString());
 
                         // Меняем стиль если...
-                        String qwe = GetCalendar.getResult(auxPerson.getCurrentTime(), auxPerson.getTimeContract());
+                        String qwe = CalendarUtil.getResult(auxPerson.getTimeContract(), auxPerson.getCurrentTime());
                         if (qwe.equals("P10D") || qwe.equals("P9D") || qwe.equals("P8D")  || qwe.equals("P7D")
                                 || qwe.equals("P6D")  || qwe.equals("P5D")  || qwe.equals("P4D")  || qwe.equals("P3D")
                                 || qwe.equals("P2D")  || qwe.equals("P1D") || qwe.equals("P0D"))  {
                             setTextFill(Color.RED);
-//                            setStyle("-fx-background-color: yellow");
                             setStyle("-fx-border-color: red");
-
                         }
                     }
                 }
             };
         });
-    }
+            }
 
     /**
      * Вызывается главным приложением, которое даёт на себя ссылку.
      *
      * @param main
      */
-
 
     public void setMain(Main main) {
         this.main = main;
@@ -180,7 +166,6 @@ public class MainController {
             if (n != null) {
                 linkTable.setItems(n.getNameLink());
                 costsTable.setItems(n.getCosts());
-//                costsTable.setItems(n.getCostsDescription());
             }
         });
     }
@@ -227,13 +212,7 @@ public class MainController {
             contractTable.getItems().remove(selectedIndex);
         } else {
             // Ничего не выбрано.
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.initOwner(main.getMenuBar());
-            alert.setTitle("Ошибка");
-            alert.setHeaderText("Документ не выбран.");
-            alert.setContentText("Пожалуйста выделите документ, который хотите удалить.");
-
-            alert.showAndWait();
+            AlertWindow.showAlertWarning();
         }
     }
 
@@ -251,8 +230,8 @@ public class MainController {
     }
 
     /**
-     * Вызывается, когда пользователь кликает по кнопка Изменить...
-     * Открывает диалоговое окно для изменения выбранного адресата.
+     * Вызывается, когда пользователь кликает по кнопка Изменить.
+     * Открывает диалоговое окно для изменения выбранного договора.
      */
     @FXML
     private void handleEditData() {
@@ -265,16 +244,14 @@ public class MainController {
 
         } else {
             // Ничего не выбрано.
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.initOwner(main.getMenuBar());
-            alert.setTitle("Ошибка");
-            alert.setHeaderText("Договор не выбран.");
-            alert.setContentText("Пожалуйста, выберите необходимый документ для правки.");
-
-            alert.showAndWait();
+            AlertWindow.showAlertWarning();
         }
     }
 
+    /**
+     * Вызывается, когда пользователь кликает по кнопка Добавить.
+     * Открывает диалоговое окно для добавления ссылки на документ.
+     */
     @FXML
     private void addLink() {   //разобраться как работает
         MainData selectedData = contractTable.getSelectionModel().getSelectedItem();
@@ -285,42 +262,36 @@ public class MainController {
             }
         } else {
             // Ничего не выбрано.
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.initOwner(main.getMenuBar());
-            alert.setTitle("Ошибка");
-            alert.setHeaderText("Договор не выбран.");
-            alert.setContentText("Пожалуйста, выберите необходимый документ для правки.");
-
-            alert.showAndWait();
+            AlertWindow.showAlertWarning();
         }
     }
 
+    /**
+     * Вызывается, когда пользователь кликает по кнопка Расход.
+     * Открывает диалоговое окно для добавления статьи расходов.
+     */
     @FXML
-    private void addCost() {   //разобраться как работает
+    private void addCost() {
         MainData selectedData = contractTable.getSelectionModel().getSelectedItem();
         if (selectedData != null) {
-            boolean okClicked = main.showAddCost(selectedData); //?
+            boolean okClicked = main.showAddCost(selectedData);
             if (okClicked) {
                 showContractDetails(selectedData);
             }
         } else {
             // Ничего не выбрано.
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.initOwner(main.getMenuBar());
-            alert.setTitle("Ошибка");
-            alert.setHeaderText("Договор не выбран.");
-            alert.setContentText("Пожалуйста, выберите необходимый документ для правки.");
-
-            alert.showAndWait();
+            AlertWindow.showAlertWarning();
         }
     }
 }
 
-class GetCalendar {
-
+/**
+ * Утилита для определения остатка дней между сегодняшней
+ * датой и датой завершения договора
+ */
+class CalendarUtil {
     public static String getResult(LocalDate firstDate, LocalDate secondDate) {
         Period period = Period.between(secondDate, firstDate);
-//        System.out.println(period.getYears() + "." + period.getMonths() + "." + period.getDays());
         String s = period.toString();
         System.out.println(s);
         return s;

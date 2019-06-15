@@ -25,7 +25,6 @@ public class AddLinkController {
 
     @FXML
     private void initialize() {
-
     }
 
     /**
@@ -76,6 +75,10 @@ public class AddLinkController {
         editStage.close();
     }
 
+    /**
+     * Открываем проводник, что бы выбрать документ, которого
+     * собираемся добавить ссылку
+     */
     @FXML
     private void addFile(){
         FileChooser fileChooser = new FileChooser();
@@ -98,6 +101,7 @@ public class AddLinkController {
      * Проверяем правильность ввода
      * @return
      */
+    //TODO
     private boolean isInputValid() {
 
         return true;

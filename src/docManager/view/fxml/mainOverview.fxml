@@ -124,7 +124,7 @@
                                         <Font size="14.0" />
                                     </font>
                                 </Label>
-                                <Button mnemonicParsing="false" onAction="#addCost" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: E4E4D3;" text="Правка" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                                <Button mnemonicParsing="false" onAction="#addCost" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: E4E4D3;" text="Расход" GridPane.columnIndex="2" GridPane.rowIndex="7" />
                                 <Button mnemonicParsing="false" onAction="#addLink" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: E4E4D3;" text="Добавить" GridPane.columnIndex="2" GridPane.rowIndex="8" />
                             </children>
                         </GridPane>
