@@ -1,205 +1,223 @@
 package docManager.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
-import docManager.util.ListPropertyAdapter;
+
+import docManager.service.beans.Document;
 import javafx.beans.property.*;
-import docManager.util.LocalDateAdapter;
 import javafx.collections.FXCollections;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 public class MainData {
-    private final StringProperty numberContract;
-    private final ObjectProperty<LocalDate> dateContract;
-    private final StringProperty counterparty;
-    private final StringProperty subjectContract;
-    private final ObjectProperty<LocalDate> dateExecutionContract;
-    private final ObjectProperty<LocalDate> timeContract;
-    private final IntegerProperty price;
-    private final IntegerProperty priceOnly;
-    private final ListProperty<Attachment> nameLink;
-    private final ListProperty<Attachment> costs;
+	private final StringProperty numberContract = new SimpleStringProperty();
+	private final ObjectProperty<LocalDate> dateContract = new SimpleObjectProperty<LocalDate>();
+	private final StringProperty counterparty = new SimpleStringProperty();
+	private final StringProperty subjectContract = new SimpleStringProperty();
+	private final ObjectProperty<LocalDate> dateExecutionContract = new SimpleObjectProperty<LocalDate>();
+	private final ObjectProperty<LocalDate> timeContract = new SimpleObjectProperty<LocalDate>();
+	private final IntegerProperty price = new SimpleIntegerProperty();
+	private final IntegerProperty priceOnly = new SimpleIntegerProperty();
+	private final ListProperty<Attachment> nameLink = new SimpleListProperty<>(FXCollections.observableArrayList());;
+	private final ListProperty<Attachment> costs = new SimpleListProperty<>(FXCollections.observableArrayList());
 //    private final ListProperty<Attachment> costsDescription;
 
-    /**
-     * Конструктор по умолчанию.
-     */
-    public MainData() {
-        this(null, null, null);
-    }
+	/**
+	 * Конструктор по умолчанию.
+	 */
+	public MainData() {
+		this(null, null, null);
+	}
 
-    /**
-     * Конструктор с некоторыми начальными данными.
-     */
-    public MainData(String numberContract, LocalDate dateExecutionContract, LocalDate timeContract) {
-        this.numberContract = new SimpleStringProperty(numberContract);
-        this.dateExecutionContract = new SimpleObjectProperty(dateExecutionContract);
-        this.timeContract = new SimpleObjectProperty(timeContract);
+	/**
+	 * Конструктор модели UI из данных
+	 */
+	public MainData(Document doc) {
+		this.numberContract.set(doc.getNumberContract());
+		this.dateExecutionContract.set(doc.getDateExecutionContract());
+		this.timeContract.set(doc.getTimeContract());
 
-        // Какие-то фиктивные начальные данные для удобства тестирования.
-        this.dateContract = new SimpleObjectProperty();
-        this.counterparty = new SimpleStringProperty();
-        this.subjectContract = new SimpleStringProperty();
-        this.price = new SimpleIntegerProperty();
-        this.priceOnly = new SimpleIntegerProperty();
-        this.nameLink = new SimpleListProperty<>(FXCollections.observableArrayList());
-        this.costs = new SimpleListProperty<>(FXCollections.observableArrayList());
-    }
+		this.counterparty.set(doc.getCounterparty());
+		this.subjectContract.set(doc.getSubjectContract());
+		this.price.set(doc.getPrice().intValue()); // TODO: деньги не int
+		this.priceOnly.set(doc.getPriceOnly().intValue()); // TODO: деньги не int
+		
+		// TODO: вложенные документы
+	}
 
-    @XmlJavaTypeAdapter(ListPropertyAdapter.class)
-    public ListProperty<Attachment> getCosts() {
-        return costs;
-    }
+	/**
+	 * @return данные из модели
+	 */
+	public Document toDocument() {
+		Document document = new Document();
+		document.setNumberContract(numberContract.get());
+		document.setDateExecutionContract(dateExecutionContract.get());
+		document.setTimeContract(timeContract.get());
+		document.setCounterparty(counterparty.get());
+		document.setSubjectContract(subjectContract.get());
+		document.setPrice(BigDecimal.valueOf(price.get()));
+		document.setPriceOnly(BigDecimal.valueOf(priceOnly.get()));
+		// TODO: вложенные документы
+		return document;
+	}
 
-    public int getCostsInteger() {
-        String tempString;
-        int tempInteger;
-        int theEnd = 0;
-        for (Attachment element: costs) {
-            tempString = element.toString();
-            tempInteger = Integer.parseInt(tempString);
-            theEnd += tempInteger;
-            System.out.println(theEnd);
-        }
-        return theEnd;
-    }
+	/**
+	 * Конструктор с некоторыми начальными данными.
+	 */
+	public MainData(String numberContract, LocalDate dateExecutionContract, LocalDate timeContract) {
+		this.numberContract.set(numberContract);
+		this.dateExecutionContract.set(dateExecutionContract);
+		this.timeContract.set(timeContract);
+	}
 
-    public ListProperty<Attachment> setCosts(String nameLink, String qwerty) {
-        this.costs.add(new Attachment(this, nameLink, qwerty));
-        return getCosts();
-    }
+	public ListProperty<Attachment> getCosts() {
+		return costs;
+	}
 
-    @XmlJavaTypeAdapter(ListPropertyAdapter.class)
-    public ListProperty<Attachment> getNameLink() {
-        return nameLink;
-    }
+	public int getCostsInteger() {
+		String tempString;
+		int tempInteger;
+		int theEnd = 0;
+		for (Attachment element : costs) {
+			tempString = element.toString();
+			tempInteger = Integer.parseInt(tempString);
+			theEnd += tempInteger;
+			System.out.println(theEnd);
+		}
+		return theEnd;
+	}
 
-    public ListProperty<Attachment> setNameLink(String nameLink, String qwerty) {
-        this.nameLink.add(new Attachment(this, nameLink, qwerty));
-        return getNameLink();
-    }
+	public ListProperty<Attachment> setCosts(String nameLink, String qwerty) {
+		this.costs.add(new Attachment(this, nameLink, qwerty));
+		return getCosts();
+	}
 
-    public int getPriceOnly() {
-        return priceOnly.get();
-    }
+	public ListProperty<Attachment> getNameLink() {
+		return nameLink;
+	}
 
-    public IntegerProperty priceOnlyProperty() {
-        return priceOnly;
-    }
+	public ListProperty<Attachment> setNameLink(String nameLink, String qwerty) {
+		this.nameLink.add(new Attachment(this, nameLink, qwerty));
+		return getNameLink();
+	}
 
-    public void setPriceOnly(int priceOnly) {
-        this.priceOnly.set(priceOnly);
-    }
+	public int getPriceOnly() {
+		return priceOnly.get();
+	}
 
-    public String getNumberContract() {
-        return numberContract.get();
-    }
+	public IntegerProperty priceOnlyProperty() {
+		return priceOnly;
+	}
 
-    public StringProperty numberContractProperty() {
-        return numberContract;
-    }
+	public void setPriceOnly(int priceOnly) {
+		this.priceOnly.set(priceOnly);
+	}
 
-    public void setNumberContract(String numberContract) {
-        this.numberContract.set(numberContract);
-    }
+	public String getNumberContract() {
+		return numberContract.get();
+	}
 
-    @XmlJavaTypeAdapter(LocalDateAdapter.class)
-    public LocalDate getDateContract() {
-        return dateContract.get();
-    }
+	public StringProperty numberContractProperty() {
+		return numberContract;
+	}
 
-    public ObjectProperty<LocalDate> dateContractProperty() {
-        return dateContract;
-    }
+	public void setNumberContract(String numberContract) {
+		this.numberContract.set(numberContract);
+	}
 
-    public void setDateContract(LocalDate dateContract) {
-        this.dateContract.set(dateContract);
-    }
+	public LocalDate getDateContract() {
+		return dateContract.get();
+	}
 
-    public String getCounterparty() {
-        return counterparty.get();
-    }
+	public ObjectProperty<LocalDate> dateContractProperty() {
+		return dateContract;
+	}
 
-    public StringProperty counterpartyProperty() {
-        return counterparty;
-    }
+	public void setDateContract(LocalDate dateContract) {
+		this.dateContract.set(dateContract);
+	}
 
-    public void setCounterparty(String counterparty) {
-        this.counterparty.set(counterparty);
-    }
+	public String getCounterparty() {
+		return counterparty.get();
+	}
 
-    public String getSubjectContract() {
-        return subjectContract.get();
-    }
+	public StringProperty counterpartyProperty() {
+		return counterparty;
+	}
 
-    public StringProperty subjectContractProperty() {
-        return subjectContract;
-    }
+	public void setCounterparty(String counterparty) {
+		this.counterparty.set(counterparty);
+	}
 
-    public void setSubjectContract(String subjectContract) {
-        this.subjectContract.set(subjectContract);
-    }
+	public String getSubjectContract() {
+		return subjectContract.get();
+	}
 
-    @XmlJavaTypeAdapter(LocalDateAdapter.class)
-    public LocalDate getDateExecutionContract() {
-        return dateExecutionContract.get();
-    }
+	public StringProperty subjectContractProperty() {
+		return subjectContract;
+	}
 
-    public ObjectProperty<LocalDate> dateExecutionContractProperty() {
-        return dateExecutionContract;
-    }
+	public void setSubjectContract(String subjectContract) {
+		this.subjectContract.set(subjectContract);
+	}
 
-    public void setDateExecutionContract(LocalDate dateExecutionContract) {
-        this.dateExecutionContract.set(dateExecutionContract);
-    }
+	public LocalDate getDateExecutionContract() {
+		return dateExecutionContract.get();
+	}
 
-    @XmlJavaTypeAdapter(LocalDateAdapter.class)
-    public LocalDate getTimeContract() {
-        return timeContract.get();
-    }
+	public ObjectProperty<LocalDate> dateExecutionContractProperty() {
+		return dateExecutionContract;
+	}
 
-    public LocalDate getCurrentTime(){
-        LocalDate date = LocalDate.now();
-        return date;
-    }
+	public void setDateExecutionContract(LocalDate dateExecutionContract) {
+		this.dateExecutionContract.set(dateExecutionContract);
+	}
 
-    public ObjectProperty<LocalDate> timeContractProperty() {
-        return timeContract;
-    }
+	public LocalDate getTimeContract() {
+		return timeContract.get();
+	}
 
-    public void setTimeContract(LocalDate timeContract) {
-        this.timeContract.set(timeContract);
-    }
+	public LocalDate getCurrentTime() {
+		LocalDate date = LocalDate.now();
+		return date;
+	}
 
-    public int getPrice() {
-        return price.get();
-    }
+	public ObjectProperty<LocalDate> timeContractProperty() {
+		return timeContract;
+	}
 
-    public IntegerProperty priceProperty() {
-        return price;
-    }
+	public void setTimeContract(LocalDate timeContract) {
+		this.timeContract.set(timeContract);
+	}
 
-    public void setPrice(int price) {
-        this.price.set(price);
-    }
+	public int getPrice() {
+		return price.get();
+	}
 
-    @Override
-    public String toString() {
-        return "MainData{" +
-                "nameLink=" + nameLink +
-                '}';
-    }
+	public IntegerProperty priceProperty() {
+		return price;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        MainData mainData = (MainData) o;
-        return Objects.equals(timeContract, mainData.timeContract);
-    }
+	public void setPrice(int price) {
+		this.price.set(price);
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(timeContract);
-    }
+	@Override
+	public String toString() {
+		return "MainData{" + "nameLink=" + nameLink + '}';
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		MainData mainData = (MainData) o;
+		return Objects.equals(timeContract, mainData.timeContract);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(timeContract);
+	}
 }
