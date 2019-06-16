@@ -117,17 +117,35 @@ public class ContractEditController {
         if (numberContractField.getText() == null || numberContractField.getText().length() == 0) {
             errorMessage += "Поле не заполнено - № договора!\n";
         }
+
+        if (dateContractField.getText() == null || dateContractField.getText().length() == 0) {
+            errorMessage += "Поле не заполнено - Дата заключения договора!\n";
+        } else {
+            if (!DateUtil.validDate(dateContractField.getText())) {
+                errorMessage += "Неверный формат ввода. Используйте формат - дд.мм.гггг!\n";
+            }
+        }
+
         if (counterpartyField.getText() == null || counterpartyField.getText().length() == 0) {
             errorMessage += "Поле не заполнено - Контрагент!\n";
         }
+
         if (subjectContractField.getText() == null || subjectContractField.getText().length() == 0) {
             errorMessage += "Поле не заполнено - Предмет договора!\n";
         }
 
         if (dateExecutionContractField.getText() == null || dateExecutionContractField.getText().length() == 0) {
-            errorMessage += "Поле не заполнено - Дата заключения договора!\n";
+            errorMessage += "Поле не заполнено - Дата исполнения договора!\n";
         } else {
             if (!DateUtil.validDate(dateExecutionContractField.getText())) {
+                errorMessage += "Неверный формат ввода. Используйте формат - дд.мм.гггг!\n";
+            }
+        }
+
+        if (timeContractField.getText() == null || timeContractField.getText().length() == 0) {
+            errorMessage += "Поле не заполнено - Срок действия договора!\n";
+        } else {
+            if (!DateUtil.validDate(timeContractField.getText())) {
                 errorMessage += "Неверный формат ввода. Используйте формат - дд.мм.гггг!\n";
             }
         }
@@ -143,17 +161,15 @@ public class ContractEditController {
             }
         }
 
-        if (timeContractField.getText() == null || timeContractField.getText().length() == 0) {
-            errorMessage += "Поле не заполнено - Срок действия договора!\n";
-        }
 
-        if (dateContractField.getText() == null || dateContractField.getText().length() == 0) {
-            errorMessage += "Поле не заполнено - Дата заключения договора!\n";
-        } else {
-            if (!DateUtil.validDate(dateContractField.getText())) {
-                errorMessage += "Неверный формат ввода. Используйте формат - дд.мм.гггг!\n";
-            }
-        }
+
+
+
+
+
+
+
+
 
         if (errorMessage.length() == 0) {
             return true;

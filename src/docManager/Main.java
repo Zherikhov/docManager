@@ -1,9 +1,11 @@
 package docManager;
 
 import docManager.controller.*;
+import docManager.util.AlertWindow;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -13,6 +15,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import docManager.model.DataListWrapper;
 import docManager.model.MainData;
+import javafx.stage.WindowEvent;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
@@ -44,6 +47,14 @@ public class Main extends Application {
 
         initMenuBar();
         initMainWindow();
+
+        menuBar.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                event.consume();
+                AlertWindow.showAlertConfirmationExit();
+            }
+        });
     }
 
     /**

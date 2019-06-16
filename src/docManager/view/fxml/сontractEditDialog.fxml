@@ -31,15 +31,15 @@
             <Label prefHeight="36.0" prefWidth="136.0" text="Срок действия договора" wrapText="true" GridPane.rowIndex="5" />
             <Label text="Цена договора" GridPane.rowIndex="6" />
             <TextField fx:id="numberContractField" GridPane.columnIndex="1" />
-            <TextField fx:id="priceField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <TextField fx:id="timeContractField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <TextField fx:id="dateExecutionContractField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField fx:id="subjectContractField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="counterpartyField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="dateContractField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+             <TextField fx:id="dateContractField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+             <TextField fx:id="counterpartyField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+             <TextField fx:id="subjectContractField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+             <TextField fx:id="dateExecutionContractField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+             <TextField fx:id="timeContractField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+             <TextField fx:id="priceField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
          </children>
       </GridPane>
-      <Button layoutX="309.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="25.0" prefWidth="77.0" text="Отмена" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
-      <Button layoutX="225.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleOk" prefHeight="25.0" prefWidth="77.0" text="Принять" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="98.0" />
+       <Button layoutX="225.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleOk" prefHeight="25.0" prefWidth="77.0" text="Принять" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="98.0" />
+       <Button layoutX="309.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="25.0" prefWidth="77.0" text="Отмена" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
    </children>
 </AnchorPane>

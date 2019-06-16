@@ -119,13 +119,13 @@
                                         <Font size="14.0" />
                                     </font>
                                 </Label>
-                                <Label text="Прикрепленные документы" GridPane.rowIndex="8">
+                                <Label text="Прикрепить документ" GridPane.rowIndex="8">
                                     <font>
                                         <Font size="14.0" />
                                     </font>
                                 </Label>
-                                <Button mnemonicParsing="false" onAction="#addCost" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: E4E4D3;" text="Расход" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-                                <Button mnemonicParsing="false" onAction="#addLink" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: E4E4D3;" text="Добавить" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+                                <Button mnemonicParsing="false" onAction="#addCost" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: E4E4D3;" text="Списать" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                                <Button mnemonicParsing="false" onAction="#addLink" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: E4E4D3;" text="+" GridPane.columnIndex="2" GridPane.rowIndex="8" />
                             </children>
                         </GridPane>
                         <HBox layoutX="472.0" layoutY="559.0" spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">

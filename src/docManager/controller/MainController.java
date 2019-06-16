@@ -96,13 +96,15 @@ public class MainController {
 
         linkTable.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.SECONDARY) {
-                AlertWindow.showAlertConfirmation("Вы действительно хотите удалить ссылку?", linkTable);
+                int selectedIndex = linkTable.getSelectionModel().getSelectedIndex();
+                AlertWindow.showAlertConfirmationRemove("Вы действительно хотите удалить ссылку?", linkTable, selectedIndex);
             }
         });
 
         costsTable.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.SECONDARY) {
-                AlertWindow.showAlertConfirmation("Вы действительно хотите удалить списание?", costsTable);
+                int selectedIndex = costsTable.getSelectionModel().getSelectedIndex();
+                AlertWindow.showAlertConfirmationRemove("Вы действительно хотите удалить списание?", costsTable, selectedIndex);
             }
         });
 
@@ -137,9 +139,9 @@ public class MainController {
 
                         // Меняем стиль если...
                         String qwe = CalendarUtil.getResult(auxPerson.getTimeContract(), auxPerson.getCurrentTime());
-                        if (qwe.equals("P10D") || qwe.equals("P9D") || qwe.equals("P8D")  || qwe.equals("P7D")
-                                || qwe.equals("P6D")  || qwe.equals("P5D")  || qwe.equals("P4D")  || qwe.equals("P3D")
-                                || qwe.equals("P2D")  || qwe.equals("P1D") || qwe.equals("P0D"))  {
+                        if (qwe.equals("P10D") || qwe.equals("P9D") || qwe.equals("P8D") || qwe.equals("P7D")
+                                || qwe.equals("P6D") || qwe.equals("P5D") || qwe.equals("P4D") || qwe.equals("P3D")
+                                || qwe.equals("P2D") || qwe.equals("P1D") || qwe.equals("P0D")) {
                             setTextFill(Color.RED);
                             setStyle("-fx-border-color: red");
                         }
@@ -147,7 +149,7 @@ public class MainController {
                 }
             };
         });
-            }
+    }
 
     /**
      * Вызывается главным приложением, которое даёт на себя ссылку.
@@ -209,10 +211,11 @@ public class MainController {
     private void handleDeleteData() {
         int selectedIndex = contractTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
-            contractTable.getItems().remove(selectedIndex);
+            AlertWindow.showAlertConfirmationRemove("Вы действительно хотите удалить договор?",
+                    contractTable, selectedIndex);
         } else {
             // Ничего не выбрано.
-            AlertWindow.showAlertWarning();
+            AlertWindow.showAlertWarning("Договор не выбран!", null);
         }
     }
 
@@ -244,7 +247,7 @@ public class MainController {
 
         } else {
             // Ничего не выбрано.
-            AlertWindow.showAlertWarning();
+            AlertWindow.showAlertWarning("Договор не выбран!", null);
         }
     }
 
@@ -253,16 +256,16 @@ public class MainController {
      * Открывает диалоговое окно для добавления ссылки на документ.
      */
     @FXML
-    private void addLink() {   //разобраться как работает
+    private void addLink() {
         MainData selectedData = contractTable.getSelectionModel().getSelectedItem();
         if (selectedData != null) {
-            boolean okClicked = main.showAddLink(selectedData); //?
+            boolean okClicked = main.showAddLink(selectedData);
             if (okClicked) {
                 showContractDetails(selectedData);
             }
         } else {
             // Ничего не выбрано.
-            AlertWindow.showAlertWarning();
+            AlertWindow.showAlertWarning("Договор не выбран!", null);
         }
     }
 
@@ -280,7 +283,7 @@ public class MainController {
             }
         } else {
             // Ничего не выбрано.
-            AlertWindow.showAlertWarning();
+            AlertWindow.showAlertWarning("Договор не выбран!", null);
         }
     }
 }

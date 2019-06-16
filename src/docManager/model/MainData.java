@@ -19,7 +19,6 @@ public class MainData {
     private final IntegerProperty priceOnly;
     private final ListProperty<Attachment> nameLink;
     private final ListProperty<Attachment> costs;
-//    private final ListProperty<Attachment> costsDescription;
 
     /**
      * Конструктор по умолчанию.

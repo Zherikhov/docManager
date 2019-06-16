@@ -2,6 +2,7 @@ package docManager.controller;
 
 import docManager.Main;
 import docManager.model.MainData;
+import docManager.util.AlertWindow;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -59,7 +60,7 @@ public class AddCostController {
      */
     @FXML
     private void handleOk() {
-        if (isInputValid()) {
+        if (isInputValid(summField.getText())) {
             mainData.setCosts(summField.getText(), descriptionField.getText());
 
             summField.clear();
@@ -83,7 +84,13 @@ public class AddCostController {
      * @return
      */
     //TODO
-    private boolean isInputValid() {
-        return true;
+    private boolean isInputValid(String value) {
+        try {
+            Integer.parseInt(value);
+            return true;
+        } catch (NumberFormatException e) {
+            AlertWindow.showAlertWarning("Сумма указана некорректно!", null);
+            return false;
+        }
     }
 }
