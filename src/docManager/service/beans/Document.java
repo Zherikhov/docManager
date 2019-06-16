@@ -2,7 +2,11 @@ package docManager.service.beans;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import docManager.util.LocalDateAdapter;
@@ -17,6 +21,9 @@ public class Document {
 	private LocalDate timeContract;
 	private BigDecimal price;
 	private BigDecimal priceOnly;
+
+	private List<Attachment> attachments = new ArrayList<>();
+	private List<Transaction> transactions = new ArrayList<>();
 
 	public Document() {
 	}
@@ -86,6 +93,26 @@ public class Document {
 
 	public void setPriceOnly(BigDecimal priceOnly) {
 		this.priceOnly = priceOnly;
+	}
+
+	@XmlElementWrapper(name = "attachments")
+	@XmlElement(name = "attachment")
+	public List<Attachment> getAttachments() {
+		return attachments;
+	}
+
+	public void setAttachments(List<Attachment> attachments) {
+		this.attachments = attachments;
+	}
+
+	@XmlElementWrapper(name = "transactions")
+	@XmlElement(name = "transaction")
+	public List<Transaction> getTransactions() {
+		return transactions;
+	}
+
+	public void setTransactions(List<Transaction> transactions) {
+		this.transactions = transactions;
 	}
 
 	@Override
