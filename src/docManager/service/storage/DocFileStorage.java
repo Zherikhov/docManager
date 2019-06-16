@@ -1,10 +1,8 @@
-package docManager.service;
+package docManager.service.storage;
 
 import java.io.File;
 import java.io.OutputStream;
 import java.util.List;
-
-import docManager.service.beans.Document;
 
 public interface DocFileStorage {
 

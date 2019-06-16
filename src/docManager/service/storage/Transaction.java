@@ -1,4 +1,4 @@
-package docManager.service.beans;
+package docManager.service.storage;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

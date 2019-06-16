@@ -1,4 +1,4 @@
-package docManager.service;
+package docManager.service.storage;
 
 import java.io.File;
 import java.io.OutputStream;
@@ -9,11 +9,6 @@ import java.util.List;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-
-import docManager.service.beans.Attachment;
-import docManager.service.beans.DataListWrapper;
-import docManager.service.beans.Document;
-import docManager.service.beans.Transaction;
 
 /**
  * Хранилище документов, эта реализация использует JAXB.

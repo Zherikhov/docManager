@@ -1,4 +1,4 @@
-package docManager.service.beans;
+package docManager.service.storage;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;

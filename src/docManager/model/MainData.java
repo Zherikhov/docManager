@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import docManager.service.beans.Document;
+import docManager.service.storage.Document;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 
@@ -71,8 +71,8 @@ public class MainData {
 		document.setPrice(BigDecimal.valueOf(price.get()));
 		document.setPriceOnly(BigDecimal.valueOf(priceOnly.get()));
 
-		List<docManager.service.beans.Attachment> files = nameLink.stream().map(attach -> {
-			docManager.service.beans.Attachment a = new docManager.service.beans.Attachment();
+		List<docManager.service.storage.Attachment> files = nameLink.stream().map(attach -> {
+			docManager.service.storage.Attachment a = new docManager.service.storage.Attachment();
 			a.setFilename(attach.getLink());
 			return a;
 		}).collect(toList());

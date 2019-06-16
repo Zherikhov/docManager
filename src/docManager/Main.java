@@ -12,10 +12,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import docManager.model.MainData;
-import docManager.service.DocFileStorage;
-import docManager.service.JAXBDocStorage;
-import docManager.service.beans.DataListWrapper;
-import docManager.service.beans.Document;
+import docManager.service.storage.DataListWrapper;
+import docManager.service.storage.DocFileStorage;
+import docManager.service.storage.Document;
+import docManager.service.storage.JAXBDocStorage;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
