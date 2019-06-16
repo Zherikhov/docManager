@@ -1,8 +1,14 @@
 package docManager.model;
 
+import static java.util.stream.Collectors.toList;
+
 import java.math.BigDecimal;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import docManager.service.beans.Document;
 import javafx.beans.property.*;
@@ -40,8 +46,16 @@ public class MainData {
 		this.subjectContract.set(doc.getSubjectContract());
 		this.price.set(doc.getPrice().intValue()); // TODO: деньги не int
 		this.priceOnly.set(doc.getPriceOnly().intValue()); // TODO: деньги не int
-		
-		// TODO: вложенные документы
+
+		// Преобразуем коллекцию вложений - из пути к файлу сразу достаем имя для показа
+		// в интерфейсе
+		List<Attachment> atList = doc.getAttachments().stream().map(attach -> {
+			Path p = Paths.get(attach.getFilename());
+			return new Attachment(this, attach.getFilename(), p.getFileName().toString());
+		}).collect(toList());
+		nameLink.getValue().setAll(atList);
+
+		// TODO: costs
 	}
 
 	/**
@@ -56,7 +70,16 @@ public class MainData {
 		document.setSubjectContract(subjectContract.get());
 		document.setPrice(BigDecimal.valueOf(price.get()));
 		document.setPriceOnly(BigDecimal.valueOf(priceOnly.get()));
-		// TODO: вложенные документы
+
+		List<docManager.service.beans.Attachment> files = nameLink.stream().map(attach -> {
+			docManager.service.beans.Attachment a = new docManager.service.beans.Attachment();
+			a.setFilename(attach.getLink());
+			return a;
+		}).collect(toList());
+		document.setAttachments(files);
+
+		// TODO: costs
+
 		return document;
 	}
 
