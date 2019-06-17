@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="363.0" prefWidth="402.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="docManager.view.fxml.About">
+   <children>
+      <Separator layoutX="61.0" layoutY="61.0" prefHeight="9.0" prefWidth="402.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <Label alignment="CENTER" layoutX="101.0" layoutY="14.0" prefHeight="41.0" prefWidth="201.0" text="DocManager Pro" textAlignment="CENTER">
+         <font>
+            <Font name="Haettenschweiler" size="38.0" />
+         </font>
+      </Label>
+      <Label layoutX="154.0" layoutY="70.0" text="Version 1.12.4099" />
+      <Label layoutX="150.0" layoutY="281.0" prefHeight="17.0" prefWidth="101.0" text="© Copyright 2019" />
+      <Button layoutX="144.0" layoutY="313.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="115.0" text="OK" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="25.0" layoutY="230.0" prefHeight="51.0" prefWidth="352.0" text="Создано при поддержке Парк &quot;Зарядье&quot; - отдел Эксплуатации Мультимедийного оборудования" textAlignment="CENTER" wrapText="true" />
+      <Label layoutX="113.0" layoutY="87.0" text="Разработчик ПО:   Жерихов В. С." />
+      <Label layoutX="89.0" layoutY="104.0" prefHeight="17.0" prefWidth="243.0" text="Графический дизайнер:   Кротенков К. И." />
+      <Label layoutX="62.0" layoutY="182.0" prefHeight="41.0" prefWidth="279.0" text="По всем просьбам и предложениям, обращаться:  zherihovvlad@gmail.com" textAlignment="CENTER" wrapText="true" />
+      <ImageView blendMode="MULTIPLY" fitHeight="57.0" fitWidth="87.0" layoutX="157.0" layoutY="121.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../stylelogo.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

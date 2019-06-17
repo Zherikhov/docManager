@@ -2,23 +2,35 @@ package docManager.model;
 
 import java.time.LocalDate;
 import java.util.Objects;
+
 import docManager.util.ListPropertyAdapter;
 import javafx.beans.property.*;
 import docManager.util.LocalDateAdapter;
 import javafx.collections.FXCollections;
+
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import static java.util.stream.Collectors.toList;
+
+import java.math.BigDecimal;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import docManager.service.storage.Document;
+
 public class MainData {
-    private final StringProperty numberContract;
-    private final ObjectProperty<LocalDate> dateContract;
-    private final StringProperty counterparty;
-    private final StringProperty subjectContract;
-    private final ObjectProperty<LocalDate> dateExecutionContract;
-    private final ObjectProperty<LocalDate> timeContract;
-    private final IntegerProperty price;
-    private final IntegerProperty priceOnly;
-    private final ListProperty<Attachment> nameLink;
-    private final ListProperty<Attachment> costs;
+    private final StringProperty numberContract = new SimpleStringProperty();
+    private final ObjectProperty<LocalDate> dateContract = new SimpleObjectProperty<LocalDate>();
+    private final StringProperty counterparty = new SimpleStringProperty();
+    private final StringProperty subjectContract = new SimpleStringProperty();
+    private final ObjectProperty<LocalDate> dateExecutionContract = new SimpleObjectProperty<LocalDate>();
+    private final ObjectProperty<LocalDate> timeContract = new SimpleObjectProperty<LocalDate>();
+    private final IntegerProperty price = new SimpleIntegerProperty();
+    private final IntegerProperty priceOnly = new SimpleIntegerProperty();
+    private final ListProperty<Attachment> nameLink = new SimpleListProperty<>(FXCollections.observableArrayList());
+    private final ListProperty<Attachment> costs = new SimpleListProperty<>(FXCollections.observableArrayList());
 
     /**
      * Конструктор по умолчанию.
@@ -28,24 +40,75 @@ public class MainData {
     }
 
     /**
+     * Конструктор модели UI из данных
+     */
+    public MainData(Document doc) {
+        this.numberContract.set(doc.getNumberContract());
+        this.dateExecutionContract.set(doc.getDateExecutionContract());
+        this.timeContract.set(doc.getTimeContract());
+        this.dateContract.set(doc.getTimeContract());
+        this.counterparty.set(doc.getCounterparty());
+        this.subjectContract.set(doc.getSubjectContract());
+        this.price.set(doc.getPrice().intValue()); // TODO: деньги не int
+        this.priceOnly.set(doc.getPriceOnly().intValue()); // TODO: деньги не int
+
+        // Преобразуем коллекцию вложений - из пути к файлу сразу достаем имя для показа
+        // в интерфейсе
+        List<Attachment> atList = doc.getAttachments().stream().map(attach -> {
+            Path p = Paths.get(attach.getFilename());
+            return new Attachment(this, attach.getFilename(), p.getFileName().toString());
+        }).collect(toList());
+        nameLink.getValue().setAll(atList);
+
+        // TODO: costs
+        List<Attachment> atList2 = doc.getTransactions().stream().map(attach -> {
+            Path p = Paths.get(attach.getSum(), attach.getDescription());
+            return new Attachment(this, attach.getSum(), p.getFileName().toString());
+        }).collect(toList());
+        costs.getValue().setAll(atList2);
+    }
+
+    /**
+     * @return данные из модели
+     */
+    public Document toDocument() {
+        Document document = new Document();
+        document.setNumberContract(numberContract.get());
+        document.setDateExecutionContract(dateExecutionContract.get());
+        document.setTimeContract(timeContract.get());
+        document.setCounterparty(counterparty.get());
+        document.setSubjectContract(subjectContract.get());
+        document.setPrice(BigDecimal.valueOf(price.get()));
+        document.setPriceOnly(BigDecimal.valueOf(priceOnly.get()));
+
+        List<docManager.service.storage.Attachment> filesNameLink = nameLink.stream().map(attach -> {
+            docManager.service.storage.Attachment a = new docManager.service.storage.Attachment();
+            a.setFilename(attach.getLink());
+            return a;
+        }).collect(toList());
+        document.setAttachments(filesNameLink);
+
+        // TODO: costs
+        List<docManager.service.storage.Transaction> filesNameLink2 = costs.stream().map(attach -> {
+            docManager.service.storage.Transaction a = new docManager.service.storage.Transaction();
+            a.setSum(attach.getLink());
+            a.setDescription(attach.getFileName());
+            return a;
+        }).collect(toList());
+        document.setTransactions(filesNameLink2);
+
+        return document;
+    }
+
+    /**
      * Конструктор с некоторыми начальными данными.
      */
     public MainData(String numberContract, LocalDate dateExecutionContract, LocalDate timeContract) {
-        this.numberContract = new SimpleStringProperty(numberContract);
-        this.dateExecutionContract = new SimpleObjectProperty(dateExecutionContract);
-        this.timeContract = new SimpleObjectProperty(timeContract);
-
-        // Какие-то фиктивные начальные данные для удобства тестирования.
-        this.dateContract = new SimpleObjectProperty();
-        this.counterparty = new SimpleStringProperty();
-        this.subjectContract = new SimpleStringProperty();
-        this.price = new SimpleIntegerProperty();
-        this.priceOnly = new SimpleIntegerProperty();
-        this.nameLink = new SimpleListProperty<>(FXCollections.observableArrayList());
-        this.costs = new SimpleListProperty<>(FXCollections.observableArrayList());
+        this.numberContract.set(numberContract);
+        this.dateExecutionContract.set(dateExecutionContract);
+        this.timeContract.set(timeContract);
     }
 
-    @XmlJavaTypeAdapter(ListPropertyAdapter.class)
     public ListProperty<Attachment> getCosts() {
         return costs;
     }
@@ -54,7 +117,7 @@ public class MainData {
         String tempString;
         int tempInteger;
         int theEnd = 0;
-        for (Attachment element: costs) {
+        for (Attachment element : costs) {
             tempString = element.toString();
             tempInteger = Integer.parseInt(tempString);
             theEnd += tempInteger;
@@ -64,17 +127,16 @@ public class MainData {
     }
 
     public ListProperty<Attachment> setCosts(String nameLink, String qwerty) {
-        this.costs.add(new Attachment(this, nameLink, qwerty));
+        this.costs.add(new Attachment(this, nameLink, qwerty));              //TODO qwerty
         return getCosts();
     }
 
-    @XmlJavaTypeAdapter(ListPropertyAdapter.class)
     public ListProperty<Attachment> getNameLink() {
         return nameLink;
     }
 
     public ListProperty<Attachment> setNameLink(String nameLink, String qwerty) {
-        this.nameLink.add(new Attachment(this, nameLink, qwerty));
+        this.nameLink.add(new Attachment(this, nameLink, qwerty));           //TODO qwerty
         return getNameLink();
     }
 
@@ -102,7 +164,6 @@ public class MainData {
         this.numberContract.set(numberContract);
     }
 
-    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     public LocalDate getDateContract() {
         return dateContract.get();
     }
@@ -139,7 +200,6 @@ public class MainData {
         this.subjectContract.set(subjectContract);
     }
 
-    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     public LocalDate getDateExecutionContract() {
         return dateExecutionContract.get();
     }
@@ -152,12 +212,11 @@ public class MainData {
         this.dateExecutionContract.set(dateExecutionContract);
     }
 
-    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     public LocalDate getTimeContract() {
         return timeContract.get();
     }
 
-    public LocalDate getCurrentTime(){
+    public LocalDate getCurrentTime() {
         LocalDate date = LocalDate.now();
         return date;
     }
@@ -184,15 +243,15 @@ public class MainData {
 
     @Override
     public String toString() {
-        return "MainData{" +
-                "nameLink=" + nameLink +
-                '}';
+        return "MainData{" + "nameLink=" + nameLink + '}';
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         MainData mainData = (MainData) o;
         return Objects.equals(timeContract, mainData.timeContract);
     }

@@ -9,25 +9,30 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import docManager.model.DataListWrapper;
 import docManager.model.MainData;
 import javafx.stage.WindowEvent;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.IOException;
 import java.util.prefs.Preferences;
+
+import docManager.service.storage.DocFileStorage;
+import docManager.service.storage.Document;
+import docManager.service.storage.JAXBDocStorage;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Main extends Application {
 
     private Stage menuBar;
     private BorderPane mainWindow;
+
+    private DocFileStorage docStorage = new JAXBDocStorage();
 
     /**
      * Данные, в виде наблюдаемого списка документов.
@@ -42,8 +47,9 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         this.menuBar = primaryStage;
+        menuBar.getIcons().add(new Image("file:stylelogo.png"));
 
         initMenuBar();
         initMainWindow();
@@ -108,6 +114,7 @@ public class Main extends Application {
 
     /**
      * Возвращаем главную сцену.
+     *
      * @return
      */
     public Stage getMenuBar() {
@@ -119,9 +126,9 @@ public class Main extends Application {
     }
 
     /**
-     * Открывает диалоговое окно для изменения деталей указанного договора.
-     * Если пользователь кликнул OK, то изменения сохраняются в предоставленном
-     * объекте адресата и возвращается значение true.
+     * Открывает диалоговое окно для изменения деталей указанного договора. Если
+     * пользователь кликнул OK, то изменения сохраняются в предоставленном объекте
+     * адресата и возвращается значение true.
      *
      * @param mainData - объект адресата, который надо изменить
      * @return true, если пользователь кликнул OK, в противном случае false.
@@ -159,9 +166,9 @@ public class Main extends Application {
     }
 
     /**
-     * Открывает диалоговое окно для добавления документов в указанный договор.
-     * Если пользователь кликнул OK, то изменения сохраняются в предоставленном
-     * объекте документа и возвращается значение true.
+     * Открывает диалоговое окно для добавления документов в указанный договор. Если
+     * пользователь кликнул OK, то изменения сохраняются в предоставленном объекте
+     * документа и возвращается значение true.
      *
      * @param mainData - объект адресата, который надо изменить
      * @return true, если пользователь кликнул OK, в противном случае false.
@@ -200,9 +207,9 @@ public class Main extends Application {
     }
 
     /**
-     * Открывает диалоговое окно для добавление расходов в указанном договоре.
-     * Если пользователь кликнул OK, то изменения сохраняются в предоставленном
-     * объекте адресата и возвращается значение true.
+     * Открывает диалоговое окно для добавление расходов в указанном договоре. Если
+     * пользователь кликнул OK, то изменения сохраняются в предоставленном объекте
+     * адресата и возвращается значение true.
      *
      * @param mainData - объект адресата, который надо изменить
      * @return true, если пользователь кликнул OK, в противном случае false.
@@ -240,7 +247,6 @@ public class Main extends Application {
         }
     }
 
-
     /**
      * Возвращает preference файла документов, то есть, последний открытый файл.
      * Этот preference считывается из реестра, специфичного для конкретной
@@ -259,8 +265,8 @@ public class Main extends Application {
     }
 
     /**
-     * Задаёт путь текущему загруженному файлу. Этот путь сохраняется
-     * в реестре, специфичном для конкретной операционной системы.
+     * Задаёт путь текущему загруженному файлу. Этот путь сохраняется в реестре,
+     * специфичном для конкретной операционной системы.
      *
      * @param file - файл или null, чтобы удалить путь
      */
@@ -280,25 +286,19 @@ public class Main extends Application {
     }
 
     /**
-     * Загружает информацию  документов из указанного файла.
-     * Текущая информация документов будет заменена.
+     * Загружает информацию документов из указанного файла. Текущая информация
+     * документов будет заменена.
      *
      * @param file
      */
     public void loadDataFromFile(File file) {
         try {
-            JAXBContext context = JAXBContext.newInstance(DataListWrapper.class);
-            Unmarshaller um = context.createUnmarshaller();
-
-            // Чтение XML из файла и демаршализация.
-            DataListWrapper wrapper = (DataListWrapper) um.unmarshal(file);
-
-            contractData.clear();
-            contractData.addAll(wrapper.getMainData());
+            List<MainData> mainDataList = docStorage.read(file).stream().map(MainData::new)
+                    .collect(Collectors.toList());
+            contractData.setAll(mainDataList);
 
             // Сохраняем путь к файлу в реестре.
             setDataFilePath(file);
-
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Ошибка!");
@@ -316,17 +316,8 @@ public class Main extends Application {
      */
     public void saveDataDataToFile(File file) {
         try {
-            JAXBContext context = JAXBContext
-                    .newInstance(DataListWrapper.class);
-            Marshaller m = context.createMarshaller();
-            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
-            // Обёртываем наши данные об адресатах.
-            DataListWrapper wrapper = new DataListWrapper();
-            wrapper.setMainData(contractData);
-
-            // Маршаллируем и сохраняем XML в файл.
-            m.marshal(wrapper, file);
+            List<Document> docs = contractData.stream().map(MainData::toDocument).collect(Collectors.toList());
+            docStorage.write(file, docs);
 
             // Сохраняем путь к файлу в реестре.
             setDataFilePath(file);
