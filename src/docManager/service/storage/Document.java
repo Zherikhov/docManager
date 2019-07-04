@@ -13,17 +13,17 @@ import docManager.util.LocalDateAdapter;
 
 public class Document {
 
-    private String numberContract;
-    private LocalDate dateContract;
-    private String counterparty;
-    private String subjectContract;
-    private LocalDate dateExecutionContract;
-    private LocalDate timeContract;
-    private BigDecimal price;
-    private BigDecimal priceOnly;
+    private String numberContract;              //номер договора
+    private LocalDate dateContract;             //дата заключения договора
+    private String counterparty;                //Контрагент
+    private String subjectContract;             //Предмет договора
+    private LocalDate dateExecutionContract;    //дата исполнения договора
+    private LocalDate timeContract;             //срок действия договора
+    private BigDecimal price;                   //цена договора
+    private BigDecimal priceOnly;               //остаток цены по договору
 
-    private List<Attachment> attachments = new ArrayList<>();
-    private List<Transaction> transactions = new ArrayList<>();
+    private List<Attachment> attachments = new ArrayList<>();       //таблица с файлами
+    private List<Transaction> transactions = new ArrayList<>();     //таблица с расходами
 
     public Document() {
     }

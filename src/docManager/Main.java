@@ -2,13 +2,16 @@ package docManager;
 
 import docManager.controller.*;
 import docManager.util.AlertWindow;
+import docManager.service.storage.DocFileStorage;
+import docManager.service.storage.Document;
+import docManager.service.storage.JAXBDocStorage;
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -20,10 +23,6 @@ import javafx.stage.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.prefs.Preferences;
-
-import docManager.service.storage.DocFileStorage;
-import docManager.service.storage.Document;
-import docManager.service.storage.JAXBDocStorage;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,7 +34,7 @@ public class Main extends Application {
     private DocFileStorage docStorage = new JAXBDocStorage();
 
     /**
-     * Данные, в виде наблюдаемого списка документов.
+     * Данные, в виде списка документов.
      */
     private ObservableList<MainData> contractData = FXCollections.observableArrayList();
 
@@ -44,6 +43,19 @@ public class Main extends Application {
     }
 
     public Main() {
+    }
+
+    /**
+     * Возвращаем главную сцену.
+     *
+     * @return menuBar
+     */
+    public Stage getMenuBar() {
+        return menuBar;
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 
     @Override
@@ -66,14 +78,23 @@ public class Main extends Application {
     /**
      * Инициализируем menuBar.
      */
-    public void initMenuBar() {
+    private void initMenuBar() {
+        final int PREF_MIN_WIDTH = 1100;
+        final int PREF_MIN_HEIGHT = 675;
+
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("view/fxml/menuBarOverview.fxml"));
             mainWindow = loader.load();
 
-            Scene scene = new Scene(mainWindow);
+            Scene scene = new Scene(mainWindow, PREF_MIN_WIDTH, PREF_MIN_HEIGHT);
             menuBar.setScene(scene);
+            menuBar.showingProperty().addListener((observable, oldValue, showing) -> {
+                if(showing) {
+                    menuBar.setMinHeight(menuBar.getHeight());
+                    menuBar.setMinWidth(menuBar.getWidth());
+                }
+            });
 
             // Даём контроллеру доступ к главному прилодению.
             MenuBarController controller = loader.getController();
@@ -88,7 +109,7 @@ public class Main extends Application {
     /**
      * Загружает в корневой макет mainWindow.
      */
-    public void initMainWindow() {
+    private void initMainWindow() {
         try {
             // Загружаем корневой макет из fxml файла.
             FXMLLoader loader = new FXMLLoader();
@@ -110,19 +131,6 @@ public class Main extends Application {
         if (file != null) {
             loadDataFromFile(file);
         }
-    }
-
-    /**
-     * Возвращаем главную сцену.
-     *
-     * @return
-     */
-    public Stage getMenuBar() {
-        return menuBar;
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 
     /**
@@ -252,7 +260,7 @@ public class Main extends Application {
      * Этот preference считывается из реестра, специфичного для конкретной
      * операционной системы. Если preference не был найден, то возвращается null.
      *
-     * @return
+     * @return filePath or null
      */
     public File getDataFilePath() {
         Preferences prefs = Preferences.userNodeForPackage(Main.class);
@@ -300,12 +308,8 @@ public class Main extends Application {
             // Сохраняем путь к файлу в реестре.
             setDataFilePath(file);
         } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Ошибка!");
-            alert.setHeaderText("Не удалось загрузить данные.");
-            alert.setContentText("Не удалось загрузить данные из файла:\n" + file.getPath());
-
-            alert.showAndWait();
+            AlertWindow.showAlertError("Не удалось загрузить данные.",
+                    "Пусть файла: " + file.getPath());
         }
     }
 
@@ -321,13 +325,9 @@ public class Main extends Application {
 
             // Сохраняем путь к файлу в реестре.
             setDataFilePath(file);
-        } catch (Exception e) { // catches ANY exception
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Не удалось сохранить данные");
-            alert.setContentText("Не удалось сохранить данные в:\n" + file.getPath());
-
-            alert.showAndWait();
+        } catch (Exception e) { // Ловим ЛЮБОЕ исключение
+            AlertWindow.showAlertError("Не удалось сохранить данные.",
+                    "Путь файла: " + file.getPath());
         }
     }
 }

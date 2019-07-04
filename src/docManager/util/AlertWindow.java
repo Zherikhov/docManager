@@ -4,14 +4,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableView;
 
+/**
+ * Утилитный класс, позволяющий вызвать нужное информационное окно с
+ * предупреждающим сообщением
+ */
 public class AlertWindow {
-    /**
-     * Утилита для удаление строки из таблицы
-     *
-     * @param setHeaderText
-     * @param tableView
-     * @param selectedIndex
-     */
+
     public static void showAlertConfirmationRemove(String setHeaderText, TableView tableView, int selectedIndex) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, " ", ButtonType.YES, ButtonType.NO);
         alert.setTitle("Удаление");
@@ -33,12 +31,17 @@ public class AlertWindow {
         }
     }
 
-    /**
-     * Показать окно "Внимание"
-     */
      public static void showAlertWarning(String headerText, String contentText) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Ошибка");
+        alert.setHeaderText(headerText);
+        alert.setContentText(contentText);
+        alert.showAndWait();
+    }
+
+    public static void showAlertError(String headerText, String contentText) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Ошибка!");
         alert.setHeaderText(headerText);
         alert.setContentText(contentText);
         alert.showAndWait();

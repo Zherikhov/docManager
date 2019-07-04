@@ -12,6 +12,8 @@ public class Attachment {
 
     private String link;
 
+    private int sum;
+
     private String fileName;
 
     private MainController mainController;
@@ -24,6 +26,13 @@ public class Attachment {
         super();
         this.contract = contract;
         this.link = link;
+        this.fileName = fileName;
+    }
+
+    public Attachment(MainData contract, int sum, String fileName) {
+        super();
+        this.contract = contract;
+        this.sum = sum;
         this.fileName = fileName;
     }
 

@@ -2,35 +2,28 @@ package docManager.model;
 
 import java.time.LocalDate;
 import java.util.Objects;
-
-import docManager.util.ListPropertyAdapter;
-import javafx.beans.property.*;
-import docManager.util.LocalDateAdapter;
-import javafx.collections.FXCollections;
-
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import static java.util.stream.Collectors.toList;
-
 import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import javafx.beans.property.*;
+import javafx.collections.FXCollections;
+
+import static java.util.stream.Collectors.toList;
 import docManager.service.storage.Document;
 
 public class MainData {
-    private final StringProperty numberContract = new SimpleStringProperty();
-    private final ObjectProperty<LocalDate> dateContract = new SimpleObjectProperty<LocalDate>();
-    private final StringProperty counterparty = new SimpleStringProperty();
-    private final StringProperty subjectContract = new SimpleStringProperty();
-    private final ObjectProperty<LocalDate> dateExecutionContract = new SimpleObjectProperty<LocalDate>();
-    private final ObjectProperty<LocalDate> timeContract = new SimpleObjectProperty<LocalDate>();
-    private final IntegerProperty price = new SimpleIntegerProperty();
-    private final IntegerProperty priceOnly = new SimpleIntegerProperty();
-    private final ListProperty<Attachment> nameLink = new SimpleListProperty<>(FXCollections.observableArrayList());
-    private final ListProperty<Attachment> costs = new SimpleListProperty<>(FXCollections.observableArrayList());
+    private final StringProperty numberContract = new SimpleStringProperty();                                           //номер договора
+    private final ObjectProperty<LocalDate> dateContract = new SimpleObjectProperty<LocalDate>();                       //дата заключения договора
+    private final StringProperty counterparty = new SimpleStringProperty();                                             //Контрагент
+    private final StringProperty subjectContract = new SimpleStringProperty();                                          //Предмет договора
+    private final ObjectProperty<LocalDate> dateExecutionContract = new SimpleObjectProperty<LocalDate>();              //дата исполнения договора
+    private final ObjectProperty<LocalDate> timeContract = new SimpleObjectProperty<LocalDate>();                       //срок действия договора
+    private final IntegerProperty price = new SimpleIntegerProperty();                                                  //цена договора
+    private final IntegerProperty priceOnly = new SimpleIntegerProperty();                                              //остаток цены по договору
+    private final ListProperty<Attachment> nameLink = new SimpleListProperty<>(FXCollections.observableArrayList());    //таблица с файлами
+    private final ListProperty<Attachment> costs = new SimpleListProperty<>(FXCollections.observableArrayList());       //таблица с расходами
 
     /**
      * Конструктор по умолчанию.
@@ -46,7 +39,7 @@ public class MainData {
         this.numberContract.set(doc.getNumberContract());
         this.dateExecutionContract.set(doc.getDateExecutionContract());
         this.timeContract.set(doc.getTimeContract());
-        this.dateContract.set(doc.getTimeContract());
+        this.dateContract.set(doc.getDateContract());
         this.counterparty.set(doc.getCounterparty());
         this.subjectContract.set(doc.getSubjectContract());
         this.price.set(doc.getPrice().intValue()); // TODO: деньги не int
@@ -55,12 +48,11 @@ public class MainData {
         // Преобразуем коллекцию вложений - из пути к файлу сразу достаем имя для показа
         // в интерфейсе
         List<Attachment> atList = doc.getAttachments().stream().map(attach -> {
-            Path p = Paths.get(attach.getFilename());
+            Path p = Paths.get(attach.getFilename(), attach.getDescription());
             return new Attachment(this, attach.getFilename(), p.getFileName().toString());
         }).collect(toList());
         nameLink.getValue().setAll(atList);
 
-        // TODO: costs
         List<Attachment> atList2 = doc.getTransactions().stream().map(attach -> {
             Path p = Paths.get(attach.getSum(), attach.getDescription());
             return new Attachment(this, attach.getSum(), p.getFileName().toString());
@@ -76,6 +68,7 @@ public class MainData {
         document.setNumberContract(numberContract.get());
         document.setDateExecutionContract(dateExecutionContract.get());
         document.setTimeContract(timeContract.get());
+        document.setDateContract(dateContract.get());
         document.setCounterparty(counterparty.get());
         document.setSubjectContract(subjectContract.get());
         document.setPrice(BigDecimal.valueOf(price.get()));
@@ -84,11 +77,11 @@ public class MainData {
         List<docManager.service.storage.Attachment> filesNameLink = nameLink.stream().map(attach -> {
             docManager.service.storage.Attachment a = new docManager.service.storage.Attachment();
             a.setFilename(attach.getLink());
+            a.setDescription(attach.getFileName());
             return a;
         }).collect(toList());
         document.setAttachments(filesNameLink);
 
-        // TODO: costs
         List<docManager.service.storage.Transaction> filesNameLink2 = costs.stream().map(attach -> {
             docManager.service.storage.Transaction a = new docManager.service.storage.Transaction();
             a.setSum(attach.getLink());
@@ -126,8 +119,8 @@ public class MainData {
         return theEnd;
     }
 
-    public ListProperty<Attachment> setCosts(String nameLink, String qwerty) {
-        this.costs.add(new Attachment(this, nameLink, qwerty));              //TODO qwerty
+    public ListProperty<Attachment> setCosts(String nameLink, String description) {
+        this.costs.add(new Attachment(this, nameLink, description));
         return getCosts();
     }
 
@@ -135,8 +128,8 @@ public class MainData {
         return nameLink;
     }
 
-    public ListProperty<Attachment> setNameLink(String nameLink, String qwerty) {
-        this.nameLink.add(new Attachment(this, nameLink, qwerty));           //TODO qwerty
+    public ListProperty<Attachment> setNameLink(String nameLink, String description) {
+        this.nameLink.add(new Attachment(this, nameLink, description));
         return getNameLink();
     }
 

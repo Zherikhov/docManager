@@ -13,7 +13,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.Period;
 
@@ -71,7 +70,7 @@ public class MainController {
      * Инициализация класса-контроллера.
      */
     @FXML
-    private void initialize() throws InterruptedException, ParseException {
+    private void initialize() {
 
         // Инициализация таблицы.
         numberContractColumn.setCellValueFactory(cellData -> cellData.getValue().numberContractProperty());
@@ -97,14 +96,16 @@ public class MainController {
         linkTable.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.SECONDARY) {
                 int selectedIndex = linkTable.getSelectionModel().getSelectedIndex();
-                AlertWindow.showAlertConfirmationRemove("Вы действительно хотите удалить ссылку?", linkTable, selectedIndex);
+                AlertWindow.showAlertConfirmationRemove("Вы действительно хотите удалить ссылку?",
+                        linkTable, selectedIndex);
             }
         });
 
         costsTable.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.SECONDARY) {
                 int selectedIndex = costsTable.getSelectionModel().getSelectedIndex();
-                AlertWindow.showAlertConfirmationRemove("Вы действительно хотите удалить списание?", costsTable, selectedIndex);
+                AlertWindow.showAlertConfirmationRemove("Вы действительно хотите удалить списание?",
+                        costsTable, selectedIndex);
             }
         });
 

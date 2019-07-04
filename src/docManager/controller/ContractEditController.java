@@ -161,16 +161,6 @@ public class ContractEditController {
             }
         }
 
-
-
-
-
-
-
-
-
-
-
         if (errorMessage.length() == 0) {
             return true;
         } else {

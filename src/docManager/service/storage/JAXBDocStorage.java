@@ -56,7 +56,7 @@ public class JAXBDocStorage implements DocFileStorage {
     public static void main(String[] args) throws Exception {
         JAXBDocStorage docStorage = new JAXBDocStorage();
 
-        List<Document> docs = docStorage.read(new File("E:\\Projects\\Java\\docManager\\main.xml"));
+        List<Document> docs = docStorage.read(new File("E:\\Projects\\Java\\docManager\\data.xml"));
 
 //        Attachment a1 = new Attachment();
 //        a1.setFilename("d:/docs/my/sample1.doc");
@@ -64,15 +64,15 @@ public class JAXBDocStorage implements DocFileStorage {
 //        a2.setFilename("d:/docs/my/sample2.doc");
 //        docs.get(0).getAttachments().add(a1);
 //        docs.get(0).getAttachments().add(a2);
-//
+
 //        Transaction t1 = new Transaction();
 //        t1.setDate(LocalDate.now());
-//        t1.setSum(BigDecimal.valueOf(32000));
+//        t1.setSum(Integer.toString(32000));
 //        docs.get(0).getTransactions().add(t1);
-//
-//        for (Document document : docs) {
-//            System.out.println(document);
-//        }
+
+        for (Document document : docs) {
+            System.out.println(document);
+        }
 
         docStorage.write(System.out, docs);
 
