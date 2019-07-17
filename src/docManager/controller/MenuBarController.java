@@ -100,12 +100,7 @@ public class MenuBarController {
      */
     @FXML
     private void handleAbout() {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("О программе!");
-        alert.setHeaderText("Прошу внимания!");
-        alert.setContentText("Тут скоро будет важная информация!");
-
-        alert.showAndWait();
+        main.initAbout();
     }
 
     /**

@@ -60,15 +60,9 @@ public class MainController {
     // Ссылка на главное приложение.
     private Main main;
 
-    /**
-     * Конструктор.
-     */
     public MainController() {
     }
 
-    /**
-     * Инициализация класса-контроллера.
-     */
     @FXML
     private void initialize() {
 
@@ -79,6 +73,8 @@ public class MainController {
 
         contractColumn.setCellValueFactory(new PropertyValueFactory<>("fileName"));
         linkColumn.setCellValueFactory(new PropertyValueFactory<>("link"));
+
+        //отработка двойного клика
         linkTable.setRowFactory(tv -> {
             TableRow<Attachment> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -93,6 +89,7 @@ public class MainController {
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("fileName"));
         summColumn.setCellValueFactory(new PropertyValueFactory<>("link"));
 
+        //удаление элемента
         linkTable.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.SECONDARY) {
                 int selectedIndex = linkTable.getSelectionModel().getSelectedIndex();
@@ -154,8 +151,6 @@ public class MainController {
 
     /**
      * Вызывается главным приложением, которое даёт на себя ссылку.
-     *
-     * @param main
      */
 
     public void setMain(Main main) {
@@ -163,7 +158,6 @@ public class MainController {
 
         // Добавление в таблицу данных из наблюдаемого списка
         contractTable.setItems(main.getContractData());
-
 
         contractTable.getSelectionModel().selectedItemProperty().addListener((ov, o, n) -> {
             if (n != null) {

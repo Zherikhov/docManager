@@ -255,6 +255,26 @@ public class Main extends Application {
         }
     }
 
+    public void initAbout() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("view/fxml/about.fxml"));
+            AnchorPane page = loader.load();
+
+            Stage dialogStage = new Stage();
+            dialogStage.setResizable(false);
+            dialogStage.setTitle("О программе");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(menuBar);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            dialogStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Возвращает preference файла документов, то есть, последний открытый файл.
      * Этот preference считывается из реестра, специфичного для конкретной
@@ -296,8 +316,6 @@ public class Main extends Application {
     /**
      * Загружает информацию документов из указанного файла. Текущая информация
      * документов будет заменена.
-     *
-     * @param file
      */
     public void loadDataFromFile(File file) {
         try {
@@ -315,8 +333,6 @@ public class Main extends Application {
 
     /**
      * Сохраняет текущую информацию документов в указанном файле.
-     *
-     * @param file
      */
     public void saveDataDataToFile(File file) {
         try {

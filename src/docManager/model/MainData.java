@@ -42,8 +42,8 @@ public class MainData {
         this.dateContract.set(doc.getDateContract());
         this.counterparty.set(doc.getCounterparty());
         this.subjectContract.set(doc.getSubjectContract());
-        this.price.set(doc.getPrice().intValue()); // TODO: деньги не int
-        this.priceOnly.set(doc.getPriceOnly().intValue()); // TODO: деньги не int
+        this.price.set(doc.getPrice().intValue());
+        this.priceOnly.set(doc.getPriceOnly().intValue());
 
         // Преобразуем коллекцию вложений - из пути к файлу сразу достаем имя для показа
         // в интерфейсе
@@ -133,18 +133,6 @@ public class MainData {
         return getNameLink();
     }
 
-    public int getPriceOnly() {
-        return priceOnly.get();
-    }
-
-    public IntegerProperty priceOnlyProperty() {
-        return priceOnly;
-    }
-
-    public void setPriceOnly(int priceOnly) {
-        this.priceOnly.set(priceOnly);
-    }
-
     public String getNumberContract() {
         return numberContract.get();
     }
@@ -161,10 +149,6 @@ public class MainData {
         return dateContract.get();
     }
 
-    public ObjectProperty<LocalDate> dateContractProperty() {
-        return dateContract;
-    }
-
     public void setDateContract(LocalDate dateContract) {
         this.dateContract.set(dateContract);
     }
@@ -173,20 +157,12 @@ public class MainData {
         return counterparty.get();
     }
 
-    public StringProperty counterpartyProperty() {
-        return counterparty;
-    }
-
     public void setCounterparty(String counterparty) {
         this.counterparty.set(counterparty);
     }
 
     public String getSubjectContract() {
         return subjectContract.get();
-    }
-
-    public StringProperty subjectContractProperty() {
-        return subjectContract;
     }
 
     public void setSubjectContract(String subjectContract) {
@@ -224,10 +200,6 @@ public class MainData {
 
     public int getPrice() {
         return price.get();
-    }
-
-    public IntegerProperty priceProperty() {
-        return price;
     }
 
     public void setPrice(int price) {
